@@ -20,8 +20,9 @@ return [
     Nines\BlogBundle\NinesBlogBundle::class => ['all' => true],
     Nines\EditorBundle\NinesEditorBundle::class => ['all' => true],
     Nines\FeedbackBundle\NinesFeedbackBundle::class => ['all' => true],
-    Nines\MakerBundle\NinesMakerBundle::class => ['all' => true],
+    Nines\MakerBundle\NinesMakerBundle::class => ['dev' => true],
     Nines\MediaBundle\NinesMediaBundle::class => ['all' => true],
     Nines\UserBundle\NinesUserBundle::class => ['all' => true],
     Nines\UtilBundle\NinesUtilBundle::class => ['all' => true],
+    FS\SolrBundle\FSSolrBundle::class => ['all' => true],
 ];
