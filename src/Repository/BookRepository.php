@@ -50,4 +50,18 @@ class BookRepository extends ServiceEntityRepository {
 
         return $qb->getQuery()->execute();
     }
+
+    /**
+     * @param string $q
+     *
+     * @return Book[]|Collection
+     */
+    public function searchQuery($q) {
+        $qb = $this->createQueryBuilder('book');
+        $qb->andWhere('book.title LIKE :q');
+        $qb->orderBy('book.title', 'ASC');
+        $qb->setParameter('q', "{$q}%");
+
+        return $qb->getQuery()->execute();
+    }
 }

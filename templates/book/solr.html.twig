@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Book Search{% endblock %}
+
+ {% block pageheader %}
+     <h1>Book Search</h1>
+     {% if books|length %}
+         <p class="count">
+             Displaying {{ books|length }} books.
+         </p>
+     {% endif %}
+ {% endblock %}
+
+{% block body %}
+
+    <form method="get" action="{{ path('book_search') }}" class="form-horizontal">
+        <fieldset>
+            <legend>Search</legend>
+            <div class='form-group'>
+                <label class='col-sm-2 control-label' for='q'>Search term</label>
+                <div class='col-sm-10'>
+                    <div class='input-group'>
+                        <input type='text' name='q' id='q' class='form-control' value='{{ q }}'>
+                        <span class="input-group-btn">
+                            <button class="btn btn-primary" id='btn-search' type="submit">
+                                <span class='glyphicon glyphicon-search'></span>
+                                Search
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+
+    {% if books|length %}
+
+        {% embed 'book/partial/table.html.twig' %}
+        {% endembed %}
+
+    {% endif %}
+
+{% endblock %}
+

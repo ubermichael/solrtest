@@ -34,7 +34,7 @@ class Book {
      * @var string
      * @ORM\Column(type="string", nullable=false)
      *
-     * @Solr\Field(type="string")
+     * @Solr\Field(type="text")
      */
     private $title;
 
@@ -91,6 +91,9 @@ class Book {
     }
 
     public function getId() : ?int {
+        if(is_string($this->id)) {
+            return (int)$this->id;
+        }
         return $this->id;
     }
 

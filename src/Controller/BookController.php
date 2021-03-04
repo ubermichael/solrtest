@@ -13,10 +13,12 @@ namespace App\Controller;
 use App\Entity\Book;
 use App\Form\BookType;
 use App\Repository\BookRepository;
+use FS\SolrBundle\SolrInterface;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Nines\UtilBundle\Controller\PaginatorTrait;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Solarium\Client;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -58,6 +60,29 @@ class BookController extends AbstractController implements PaginatorAwareInterfa
             $books = $this->paginator->paginate($query, $request->query->getInt('page', 1), $this->getParameter('page_size'), ['wrap-queries' => true]);
         } else {
             $books = [];
+        }
+
+        return [
+            'books' => $books,
+            'q' => $q,
+        ];
+    }
+
+    /**
+     * @Route("/solr", name="book_search", methods={"GET"})
+     *
+     * @Template
+     *
+     * @return array
+     */
+    public function solr(Request $request, SolrInterface $client) {
+        $q = $request->query->get('q');
+        $books = [];
+        if ($q) {
+            $query = $client->createQuery('App:Book');
+            $query->addSearchTerm('title', $q);
+            $books = $query->getResult();
+            dump($books);
         }
 
         return [
