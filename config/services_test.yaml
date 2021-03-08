@@ -7,3 +7,4 @@ services:
         public: true
 
     test.App\Repository\BookRepository: '@App\Repository\BookRepository'
+    test.App\Repository\FirmRepository: '@App\Repository\FirmRepository'

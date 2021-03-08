@@ -11,26 +11,21 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Nines\SolrBundle\Annotation as Solr;
+use Nines\UtilBundle\Entity\AbstractEntity;
 
 /**
  * Firm.
  *
  * @ORM\Entity(repositoryClass="App\Repository\FirmRepository")
+ * @Solr\Document
  */
-class Firm {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $id;
-
+class Firm extends AbstractEntity {
     /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=true)
+     * @Solr\Field(type="text")
      */
     private $name;
 
@@ -38,6 +33,7 @@ class Firm {
      * @var string
      *
      * @ORM\Column(name="street_address", type="text", nullable=true)
+     * @Solr\Field(type="text")
      */
     private $streetAddress;
 
@@ -45,6 +41,7 @@ class Firm {
      * @var string
      *
      * @ORM\Column(name="start_date", type="string", length=4, nullable=true)
+     * @Solr\Field(type="integer")
      */
     private $startDate;
 
@@ -52,15 +49,16 @@ class Firm {
      * @var string
      *
      * @ORM\Column(name="end_date", type="string", length=4, nullable=true)
+     * @Solr\Field(type="integer")
      */
     private $endDate;
 
-    public function getId() : ?int {
-        if (is_string($this->id)) {
-            return (int) $this->id;
-        }
+    public function __construct() {
+        parent::__construct();
+    }
 
-        return $this->id;
+    public function __toString() : string {
+        return $this->name;
     }
 
     public function getName() : ?string {

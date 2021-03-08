@@ -1,6 +1,0 @@
-fs_solr:
-    endpoints:
-        core0:
-            dsn: http://localhost:8983/solr
-            core: solrtest
-            timeout: 5

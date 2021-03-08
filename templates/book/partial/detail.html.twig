@@ -1,0 +1,46 @@
+
+<table class='table table-bordered table-condensed table-hover table-striped'>
+    <tbody>
+        <tr>
+            <th>Title</th>
+            <td>
+                                                            {{ book.title }}
+                                  </td>
+          </tr>
+          <tr>
+            <th>Pages</th>
+            <td>
+                                                            {{ book.pages }}
+                                  </td>
+          </tr>
+          <tr>
+            <th>Price</th>
+            <td>
+                                                            {{ book.price }}
+                                  </td>
+          </tr>
+          <tr>
+            <th>Description</th>
+            <td>
+                                                            {{ book.description|raw }}
+                                  </td>
+          </tr>
+          <tr>
+            <th>Published</th>
+            <td>
+                                                            {% if book.published %}{{ book.published|date }}{% endif %}
+                                  </td>
+          </tr>
+          
+          <tr>
+        <th>Created</th>
+        <td>{{ book.created|date }}</td>
+    </tr>
+    <tr>
+        <th>Updated</th>
+        <td>{{ book.updated|date }}</td>
+    </tr>
+    </tbody>
+</table>
+
+
