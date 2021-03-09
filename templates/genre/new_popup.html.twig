@@ -1,0 +1,15 @@
+    {% extends 'popup.html.twig' %}
+
+    {% block title %}New Genre {% endblock %}
+
+    {% block body %}
+    <h1>New Genre</h1>
+
+    {% embed 'genre/partial/form.html.twig' %}
+    {% endembed %}
+
+    {% endblock %}
+
+    {% block javascripts %}
+    {% include '@NinesEditor/editor/widget.html.twig' %}
+    {% endblock %}

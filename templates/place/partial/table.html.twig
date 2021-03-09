@@ -1,0 +1,64 @@
+  <table class="table table-bordered table-condensed table-hover table-striped">
+      <thead>
+          <tr>
+              <th>ID</th>                                       <th>Name</th>
+                                                         <th>Sortable Name</th>
+                                                         <th>Geo Names Id</th>
+                                                         <th>Region Name</th>
+                                                         <th>Country Name</th>
+                                                         <th>Latitude</th>
+                                                         <th>Longitude</th>
+                                                         <th>Description</th>
+                                                         <th>Notes</th>
+                  
+          </tr>
+      </thead>
+      <tbody>
+      {% for place in places %}
+          <tr>
+              <td>
+                  <a href="{{ path('place_show', { 'id': place.id }) }}">
+                      {{ place.id }}
+                  </a>
+              </td>
+              <td>
+                  {{ place.name }}
+              </td>
+          
+              <td>
+                  {{ place.sortableName }}
+              </td>
+          
+              <td>
+                  {{ place.geoNamesId }}
+              </td>
+          
+              <td>
+                  {{ place.regionName }}
+              </td>
+          
+              <td>
+                  {{ place.countryName }}
+              </td>
+          
+              <td>
+                  {{ place.latitude }}
+              </td>
+          
+              <td>
+                  {{ place.longitude }}
+              </td>
+          
+              <td>
+                  {{ place.description|raw }}
+              </td>
+          
+              <td>
+                  {{ place.notes|raw }}
+              </td>
+          
+          </tr>
+      {% endfor %}
+      </tbody>
+  </table>
+  

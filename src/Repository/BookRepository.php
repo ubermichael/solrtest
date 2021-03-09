@@ -12,10 +12,7 @@ namespace App\Repository;
 
 use App\Entity\Book;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
-use RuntimeException;
 
 /**
  * @method null|Book find($id, $lockMode = null, $lockVersion = null)
@@ -28,28 +25,32 @@ class BookRepository extends ServiceEntityRepository {
         parent::__construct($registry, Book::class);
     }
 
-    /**
-     * @return Query
-     */
-    public function indexQuery() {
-        return $this->createQueryBuilder('book')
-            ->orderBy('book.id')
+    // /**
+    //  * @return Book[] Returns an array of Book objects
+    //  */
+    /*
+    public function findByExampleField($value)
+    {
+        return $this->createQueryBuilder('b')
+            ->andWhere('b.exampleField = :val')
+            ->setParameter('val', $value)
+            ->orderBy('b.id', 'ASC')
+            ->setMaxResults(10)
             ->getQuery()
+            ->getResult()
         ;
     }
-
-    /**
-     * @param string $q
-     *
-     * @return Book[]|Collection
      */
-    public function typeaheadQuery($q) {
-        throw new RuntimeException('Not implemented yet.');
-        $qb = $this->createQueryBuilder('book');
-        $qb->andWhere('book.column LIKE :q');
-        $qb->orderBy('book.column', 'ASC');
-        $qb->setParameter('q', "{$q}%");
 
-        return $qb->getQuery()->execute();
+    /*
+    public function findOneBySomeField($value): ?Book
+    {
+        return $this->createQueryBuilder('b')
+            ->andWhere('b.exampleField = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
     }
+     */
 }

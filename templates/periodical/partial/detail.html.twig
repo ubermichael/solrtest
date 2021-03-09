@@ -1,0 +1,128 @@
+
+<table class='table table-bordered table-condensed table-hover table-striped'>
+    <tbody>
+        <tr>
+            <th>Title</th>
+            <td>
+                                                            {{ periodical.title|raw }}
+                                  </td>
+          </tr>
+          <tr>
+            <th>Sortable Title</th>
+            <td>
+                                                            {{ periodical.sortableTitle|raw }}
+                                  </td>
+          </tr>
+          <tr>
+            <th>Old Links</th>
+            <td>
+                                                            {% if periodical.oldLinks %}{{ periodical.oldLinks|join(', ') }}{% endif %}
+                                  </td>
+          </tr>
+          <tr>
+            <th>Description</th>
+            <td>
+                                                            {{ periodical.description|raw }}
+                                  </td>
+          </tr>
+          <tr>
+            <th>Notes</th>
+            <td>
+                                                            {{ periodical.notes|raw }}
+                                  </td>
+          </tr>
+          <tr>
+            <th>Run Dates</th>
+            <td>
+                                                            {{ periodical.runDates }}
+                                  </td>
+          </tr>
+          <tr>
+            <th>Continued From</th>
+            <td>
+                                                            {{ periodical.continuedFrom|raw }}
+                                  </td>
+          </tr>
+          <tr>
+            <th>Continued By</th>
+            <td>
+                                                            {{ periodical.continuedBy|raw }}
+                                  </td>
+          </tr>
+          
+                                                                  <tr>
+                <th>DateYear</th>
+                <td>
+                {% if periodical.dateYear %}
+                  <a href='{{ path("date_year_show", {"id": periodical.dateYear.id}) }}'>{{ periodical.dateYear }}</a>
+                  {% endif %}
+                </td>
+              </tr>
+                                                                  <tr>
+                <th>Place</th>
+                <td>
+                {% if periodical.location %}
+                  <a href='{{ path("place_show", {"id": periodical.location.id}) }}'>{{ periodical.location }}</a>
+                  {% endif %}
+                </td>
+              </tr>
+                                                                  <tr>
+                <th>Genre</th>
+                <td>
+                  {% if periodical.genres|length > 0 %}
+                  <ul>
+                      {% for genre in periodical.genres %} 
+                      <li>
+                          <a href='{{ path("genre_show", {"id":genre.id }) }}'>
+                              {{ genre }}
+                          </a>
+                      </li>
+                      {% endfor %}
+                  </ul>
+                  {% endif %}
+                </td>
+              </tr>
+                                                                  <tr>
+                <th>Contribution</th>
+                <td>
+                  {% if periodical.contributions|length > 0 %}
+                  <ul>
+                      {% for contribution in periodical.contributions %} 
+                      <li>
+                          <a href='{{ path("contribution_show", {"id":contribution.id }) }}'>
+                              {{ contribution }}
+                          </a>
+                      </li>
+                      {% endfor %}
+                  </ul>
+                  {% endif %}
+                </td>
+              </tr>
+                                                                  <tr>
+                <th>Publisher</th>
+                <td>
+                  {% if periodical.publishers|length > 0 %}
+                  <ul>
+                      {% for publisher in periodical.publishers %} 
+                      <li>
+                          <a href='{{ path("publisher_show", {"id":publisher.id }) }}'>
+                              {{ publisher }}
+                          </a>
+                      </li>
+                      {% endfor %}
+                  </ul>
+                  {% endif %}
+                </td>
+              </tr>
+          <tr>
+        <th>Created</th>
+        <td>{{ periodical.created|date }}</td>
+    </tr>
+    <tr>
+        <th>Updated</th>
+        <td>{{ periodical.updated|date }}</td>
+    </tr>
+    </tbody>
+</table>
+
+

@@ -1,0 +1,57 @@
+  <table class="table table-bordered table-condensed table-hover table-striped">
+      <thead>
+          <tr>
+              <th>ID</th>                                       <th>Title</th>
+                                                         <th>Sortable Title</th>
+                                                         <th>Old Links</th>
+                                                         <th>Description</th>
+                                                         <th>Notes</th>
+                                                         <th>Run Dates</th>
+                                                         <th>Continued From</th>
+                                                         <th>Continued By</th>
+                  
+          </tr>
+      </thead>
+      <tbody>
+      {% for periodical in periodicals %}
+          <tr>
+              <td>
+                  <a href="{{ path('periodical_show', { 'id': periodical.id }) }}">
+                      {{ periodical.id }}
+                  </a>
+              </td>
+              <td>
+                  {{ periodical.title|raw }}
+              </td>
+          
+              <td>
+                  {{ periodical.sortableTitle|raw }}
+              </td>
+          
+              <td>{% if periodical.oldLinks %}{{ periodical.oldLinks|join(', ') }}{% endif %}</td>
+          
+              <td>
+                  {{ periodical.description|raw }}
+              </td>
+          
+              <td>
+                  {{ periodical.notes|raw }}
+              </td>
+          
+              <td>
+                  {{ periodical.runDates }}
+              </td>
+          
+              <td>
+                  {{ periodical.continuedFrom|raw }}
+              </td>
+          
+              <td>
+                  {{ periodical.continuedBy|raw }}
+              </td>
+          
+          </tr>
+      {% endfor %}
+      </tbody>
+  </table>
+  

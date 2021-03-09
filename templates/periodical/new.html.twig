@@ -1,0 +1,15 @@
+    {% extends 'base.html.twig' %}
+
+    {% block title %}New Periodical {% endblock %}
+
+    {% block body %}
+    <h1>New Periodical</h1>
+
+    {% embed 'periodical/partial/form.html.twig' %}
+    {% endembed %}
+
+    {% endblock %}
+
+    {% block javascripts %}
+    {% include '@NinesEditor/editor/widget.html.twig' %}
+    {% endblock %}

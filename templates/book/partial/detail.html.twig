@@ -4,19 +4,19 @@
         <tr>
             <th>Title</th>
             <td>
-                                                            {{ book.title }}
+                                                            {{ book.title|raw }}
                                   </td>
           </tr>
           <tr>
-            <th>Pages</th>
+            <th>Sortable Title</th>
             <td>
-                                                            {{ book.pages }}
+                                                            {{ book.sortableTitle|raw }}
                                   </td>
           </tr>
           <tr>
-            <th>Price</th>
+            <th>Old Links</th>
             <td>
-                                                            {{ book.price }}
+                                                            {% if book.oldLinks %}{{ book.oldLinks|join(', ') }}{% endif %}
                                   </td>
           </tr>
           <tr>
@@ -26,12 +26,76 @@
                                   </td>
           </tr>
           <tr>
-            <th>Published</th>
+            <th>Notes</th>
             <td>
-                                                            {% if book.published %}{{ book.published|date }}{% endif %}
+                                                            {{ book.notes|raw }}
                                   </td>
           </tr>
           
+                                                                  <tr>
+                <th>DateYear</th>
+                <td>
+                {% if book.dateYear %}
+                  <a href='{{ path("date_year_show", {"id": book.dateYear.id}) }}'>{{ book.dateYear }}</a>
+                  {% endif %}
+                </td>
+              </tr>
+                                                                  <tr>
+                <th>Place</th>
+                <td>
+                {% if book.location %}
+                  <a href='{{ path("place_show", {"id": book.location.id}) }}'>{{ book.location }}</a>
+                  {% endif %}
+                </td>
+              </tr>
+                                                                  <tr>
+                <th>Genre</th>
+                <td>
+                  {% if book.genres|length > 0 %}
+                  <ul>
+                      {% for genre in book.genres %} 
+                      <li>
+                          <a href='{{ path("genre_show", {"id":genre.id }) }}'>
+                              {{ genre }}
+                          </a>
+                      </li>
+                      {% endfor %}
+                  </ul>
+                  {% endif %}
+                </td>
+              </tr>
+                                                                  <tr>
+                <th>Contribution</th>
+                <td>
+                  {% if book.contributions|length > 0 %}
+                  <ul>
+                      {% for contribution in book.contributions %} 
+                      <li>
+                          <a href='{{ path("contribution_show", {"id":contribution.id }) }}'>
+                              {{ contribution }}
+                          </a>
+                      </li>
+                      {% endfor %}
+                  </ul>
+                  {% endif %}
+                </td>
+              </tr>
+                                                                  <tr>
+                <th>Publisher</th>
+                <td>
+                  {% if book.publishers|length > 0 %}
+                  <ul>
+                      {% for publisher in book.publishers %} 
+                      <li>
+                          <a href='{{ path("publisher_show", {"id":publisher.id }) }}'>
+                              {{ publisher }}
+                          </a>
+                      </li>
+                      {% endfor %}
+                  </ul>
+                  {% endif %}
+                </td>
+              </tr>
           <tr>
         <th>Created</th>
         <td>{{ book.created|date }}</td>

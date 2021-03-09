@@ -1,0 +1,46 @@
+
+<table class='table table-bordered table-condensed table-hover table-striped'>
+    <tbody>
+        <tr>
+            <th>Value</th>
+            <td>
+                                                            {{ date_year.value }}
+                                  </td>
+          </tr>
+          <tr>
+            <th>Start</th>
+            <td>
+                                                            {{ date_year.start }}
+                                  </td>
+          </tr>
+          <tr>
+            <th>Start Circa</th>
+            <td>
+                                                            {% if date_year.startCirca %}Yes{% else %}No{% endif %}
+                                  </td>
+          </tr>
+          <tr>
+            <th>End</th>
+            <td>
+                                                            {{ date_year.end }}
+                                  </td>
+          </tr>
+          <tr>
+            <th>End Circa</th>
+            <td>
+                                                            {% if date_year.endCirca %}Yes{% else %}No{% endif %}
+                                  </td>
+          </tr>
+          
+          <tr>
+        <th>Created</th>
+        <td>{{ date_year.created|date }}</td>
+    </tr>
+    <tr>
+        <th>Updated</th>
+        <td>{{ date_year.updated|date }}</td>
+    </tr>
+    </tbody>
+</table>
+
+

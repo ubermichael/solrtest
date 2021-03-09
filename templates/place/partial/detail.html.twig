@@ -1,0 +1,150 @@
+
+<table class='table table-bordered table-condensed table-hover table-striped'>
+    <tbody>
+        <tr>
+            <th>Name</th>
+            <td>
+                                                            {{ place.name }}
+                                  </td>
+          </tr>
+          <tr>
+            <th>Sortable Name</th>
+            <td>
+                                                            {{ place.sortableName }}
+                                  </td>
+          </tr>
+          <tr>
+            <th>Geo Names Id</th>
+            <td>
+                                                            {{ place.geoNamesId }}
+                                  </td>
+          </tr>
+          <tr>
+            <th>Region Name</th>
+            <td>
+                                                            {{ place.regionName }}
+                                  </td>
+          </tr>
+          <tr>
+            <th>Country Name</th>
+            <td>
+                                                            {{ place.countryName }}
+                                  </td>
+          </tr>
+          <tr>
+            <th>Latitude</th>
+            <td>
+                                                            {{ place.latitude }}
+                                  </td>
+          </tr>
+          <tr>
+            <th>Longitude</th>
+            <td>
+                                                            {{ place.longitude }}
+                                  </td>
+          </tr>
+          <tr>
+            <th>Description</th>
+            <td>
+                                                            {{ place.description|raw }}
+                                  </td>
+          </tr>
+          <tr>
+            <th>Notes</th>
+            <td>
+                                                            {{ place.notes|raw }}
+                                  </td>
+          </tr>
+          
+                                                                  <tr>
+                <th>Person</th>
+                <td>
+                  {% if place.peopleBorn|length > 0 %}
+                  <ul>
+                      {% for person in place.peopleBorn %} 
+                      <li>
+                          <a href='{{ path("person_show", {"id":person.id }) }}'>
+                              {{ person }}
+                          </a>
+                      </li>
+                      {% endfor %}
+                  </ul>
+                  {% endif %}
+                </td>
+              </tr>
+                                                                  <tr>
+                <th>Person</th>
+                <td>
+                  {% if place.peopleDied|length > 0 %}
+                  <ul>
+                      {% for person in place.peopleDied %} 
+                      <li>
+                          <a href='{{ path("person_show", {"id":person.id }) }}'>
+                              {{ person }}
+                          </a>
+                      </li>
+                      {% endfor %}
+                  </ul>
+                  {% endif %}
+                </td>
+              </tr>
+                                                                  <tr>
+                <th>Person</th>
+                <td>
+                  {% if place.residents|length > 0 %}
+                  <ul>
+                      {% for person in place.residents %} 
+                      <li>
+                          <a href='{{ path("person_show", {"id":person.id }) }}'>
+                              {{ person }}
+                          </a>
+                      </li>
+                      {% endfor %}
+                  </ul>
+                  {% endif %}
+                </td>
+              </tr>
+                                                                  <tr>
+                <th>Publication</th>
+                <td>
+                  {% if place.publications|length > 0 %}
+                  <ul>
+                      {% for publication in place.publications %} 
+                      <li>
+                          <a href='{{ path("publication_show", {"id":publication.id }) }}'>
+                              {{ publication }}
+                          </a>
+                      </li>
+                      {% endfor %}
+                  </ul>
+                  {% endif %}
+                </td>
+              </tr>
+                                                                  <tr>
+                <th>Publisher</th>
+                <td>
+                  {% if place.publishers|length > 0 %}
+                  <ul>
+                      {% for publisher in place.publishers %} 
+                      <li>
+                          <a href='{{ path("publisher_show", {"id":publisher.id }) }}'>
+                              {{ publisher }}
+                          </a>
+                      </li>
+                      {% endfor %}
+                  </ul>
+                  {% endif %}
+                </td>
+              </tr>
+          <tr>
+        <th>Created</th>
+        <td>{{ place.created|date }}</td>
+    </tr>
+    <tr>
+        <th>Updated</th>
+        <td>{{ place.updated|date }}</td>
+    </tr>
+    </tbody>
+</table>
+
+

@@ -1,0 +1,40 @@
+
+<table class='table table-bordered table-condensed table-hover table-striped'>
+    <tbody>
+        
+                                                                  <tr>
+                <th>Role</th>
+                <td>
+                {% if contribution.role %}
+                  <a href='{{ path("role_show", {"id": contribution.role.id}) }}'>{{ contribution.role }}</a>
+                  {% endif %}
+                </td>
+              </tr>
+                                                                  <tr>
+                <th>Person</th>
+                <td>
+                {% if contribution.person %}
+                  <a href='{{ path("person_show", {"id": contribution.person.id}) }}'>{{ contribution.person }}</a>
+                  {% endif %}
+                </td>
+              </tr>
+                                                                  <tr>
+                <th>Publication</th>
+                <td>
+                {% if contribution.publication %}
+                  <a href='{{ path("publication_show", {"id": contribution.publication.id}) }}'>{{ contribution.publication }}</a>
+                  {% endif %}
+                </td>
+              </tr>
+          <tr>
+        <th>Created</th>
+        <td>{{ contribution.created|date }}</td>
+    </tr>
+    <tr>
+        <th>Updated</th>
+        <td>{{ contribution.updated|date }}</td>
+    </tr>
+    </tbody>
+</table>
+
+

@@ -39,10 +39,10 @@ class CheckUtf8Command extends Command {
             $n++;
             /** @var Book $book */
             $book = $row[0];
-            if ( preg_match("/[\x01-\x1F\x7F]/u", $book->getTitle())) {
+            if (preg_match("/[\x01-\x1F\x7F]/u", $book->getTitle())) {
                 $output->writeln("Book {$book->getId()} has bad title.");
             }
-            if ( preg_match("/[\x01-\x1F\x7F]/u", $book->getDescription())) {
+            if (preg_match("/[\x01-\x1F\x7F]/u", $book->getDescription())) {
                 $output->writeln("Book {$book->getId()} has bad description.");
             }
             if (0 === $n % self::BATCH_SIZE) {

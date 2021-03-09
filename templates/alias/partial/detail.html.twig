@@ -1,0 +1,68 @@
+
+<table class='table table-bordered table-condensed table-hover table-striped'>
+    <tbody>
+        <tr>
+            <th>Name</th>
+            <td>
+                                                            {{ alias.name }}
+                                  </td>
+          </tr>
+          <tr>
+            <th>Sortable Name</th>
+            <td>
+                                                            {{ alias.sortableName }}
+                                  </td>
+          </tr>
+          <tr>
+            <th>Maiden</th>
+            <td>
+                                                            {% if alias.maiden %}Yes{% else %}No{% endif %}
+                                  </td>
+          </tr>
+          <tr>
+            <th>Married</th>
+            <td>
+                                                            {% if alias.married %}Yes{% else %}No{% endif %}
+                                  </td>
+          </tr>
+          <tr>
+            <th>Description</th>
+            <td>
+                                                            {{ alias.description|raw }}
+                                  </td>
+          </tr>
+          <tr>
+            <th>Notes</th>
+            <td>
+                                                            {{ alias.notes|raw }}
+                                  </td>
+          </tr>
+          
+                                                                  <tr>
+                <th>Person</th>
+                <td>
+                  {% if alias.people|length > 0 %}
+                  <ul>
+                      {% for person in alias.people %} 
+                      <li>
+                          <a href='{{ path("person_show", {"id":person.id }) }}'>
+                              {{ person }}
+                          </a>
+                      </li>
+                      {% endfor %}
+                  </ul>
+                  {% endif %}
+                </td>
+              </tr>
+          <tr>
+        <th>Created</th>
+        <td>{{ alias.created|date }}</td>
+    </tr>
+    <tr>
+        <th>Updated</th>
+        <td>{{ alias.updated|date }}</td>
+    </tr>
+    </tbody>
+</table>
+
+

@@ -20,3 +20,4 @@ public/yarn
 jquery.collection.html.twig
 data
 lib
+*.sql

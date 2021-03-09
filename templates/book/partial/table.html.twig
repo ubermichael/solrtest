@@ -2,10 +2,10 @@
       <thead>
           <tr>
               <th>ID</th>                                       <th>Title</th>
-                                                         <th>Pages</th>
-                                                         <th>Price</th>
+                                                         <th>Sortable Title</th>
+                                                         <th>Old Links</th>
                                                          <th>Description</th>
-                                                         <th>Published</th>
+                                                         <th>Notes</th>
                   
           </tr>
       </thead>
@@ -18,22 +18,22 @@
                   </a>
               </td>
               <td>
-                  {{ book.title }}
+                  {{ book.title|raw }}
               </td>
           
               <td>
-                  {{ book.pages }}
+                  {{ book.sortableTitle|raw }}
               </td>
           
-              <td>
-                  {{ book.price }}
-              </td>
+              <td>{% if book.oldLinks %}{{ book.oldLinks|join(', ') }}{% endif %}</td>
           
               <td>
                   {{ book.description|raw }}
               </td>
           
-              <td>{% if book.published %}{{ book.published|date }}{% endif %}</td>
+              <td>
+                  {{ book.notes|raw }}
+              </td>
           
           </tr>
       {% endfor %}
