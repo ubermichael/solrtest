@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Search{% endblock %}
+
+ {% block pageheader %}
+     <h1>Search</h1>
+     {% if qr %}
+         <p class="count">
+             Displaying {{ qr.count }} results from {{ start }} to {{ end }} of {{ qr.total }} total.
+         </p>
+     {% endif %}
+ {% endblock %}
+
+{% block body %}
+
+    <form method="get" action="{{ path('solr') }}" class="form-horizontal">
+        <fieldset>
+            <legend>Search</legend>
+            <div class='form-group'>
+                <label class='col-sm-2 control-label' for='q'>Search term</label>
+                <div class='col-sm-10'>
+                    <div class='input-group'>
+                        <input type='text' name='q' id='q' class='form-control' value='{{ q }}'>
+                        <span class="input-group-btn">
+                            <button class="btn btn-primary" id='btn-search' type="submit">
+                                <span class='glyphicon glyphicon-search'></span>
+                                Search
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+
+    {% if qr and qr.count > 0 %}
+
+        <h2>Results</h2>
+        <div class='row'>
+        <div class='col-sm-3'>
+            <ul>
+                {% for k,v in qr.getFacet('type') %}
+                    <li>
+                        {{ k }}: {{ v }}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class='col-sm-9'>
+
+        <div class="navigation">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+
+        {% for i in 0..(qr.count-1) %}
+            <div style='outline: 1px solid lightgrey; margin: 3px; padding: 3px;'>
+                {% set document = qr.getDocument(i) %}
+                {% set entity = qr.entity(i) %}
+                <b>{{ document.type_s }}: {{ entity }}</b><br />
+                {% for h in qr.getHighlighting(i) %}
+                    {{ h|join("...")|raw }}
+                {% endfor %}
+            </div>
+        {% endfor %}
+
+        <div class="navigation">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+    {% endif %}
+
+
+    </div>
+    </div>
+
+{% endblock %}
