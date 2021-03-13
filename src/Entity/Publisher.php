@@ -14,6 +14,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Nines\UtilBundle\Entity\AbstractEntity;
+use Nines\SolrBundle\Annotation as Solr;
 
 /**
  * Publisher.
@@ -22,6 +23,8 @@ use Nines\UtilBundle\Entity\AbstractEntity;
  *     @ORM\Index(columns="name", flags={"fulltext"})
  * })
  * @ORM\Entity(repositoryClass="App\Repository\PublisherRepository")
+ *
+ * @Solr\Document()
  */
 class Publisher extends AbstractEntity {
     use HasPublications {
@@ -32,12 +35,16 @@ class Publisher extends AbstractEntity {
      * @var string
      * @ORM\Column(type="string", length=100, nullable=false)
      * @ORM\OrderBy({"sortableName": "ASC"})
+     *
+     * @Solr\Field(type="text")
      */
     private $name;
 
     /**
      * @var string
      * @ORM\Column(type="text", nullable=true)
+     *
+     * @Solr\Field(type="text", filters={"strip_tags", "html_entity_decode(51, 'UTF-8')"})
      */
     private $notes;
 
@@ -45,6 +52,8 @@ class Publisher extends AbstractEntity {
      * @var Collection|Place[]
      * @ORM\ManyToMany(targetEntity="Place", inversedBy="publishers")
      * @ORM\OrderBy({"sortableName": "ASC"})
+     *
+     * @Solr\Field(type="texts", getter="getPlaces(true)")
      */
     private $places;
 
@@ -52,6 +61,7 @@ class Publisher extends AbstractEntity {
      * @var Collection|Publication[]
      * @ORM\ManyToMany(targetEntity="Publication", mappedBy="publishers")
      * @ORM\OrderBy({"sortableTitle": "ASC"})
+     * @Solr\Field(type="texts", getter="getPublications(true)")
      */
     private $publications;
 
@@ -108,12 +118,10 @@ class Publisher extends AbstractEntity {
         $this->places->removeElement($place);
     }
 
-    /**
-     * Get places.
-     *
-     * @return Collection
-     */
-    public function getPlaces() {
+    public function getPlaces($flatten = false) {
+        if($flatten) {
+            return array_map(function(Place $p){return $p->getName();}, $this->places->toArray());
+        }
         return $this->places;
     }
 
@@ -131,10 +139,10 @@ class Publisher extends AbstractEntity {
         return $this;
     }
 
-    /**
-     * @return Collection|Publication[]
-     */
-    public function getPublications() : Collection {
+    public function getPublications($flatten)  {
+        if($flatten) {
+            return array_map(function(Publication $p){return $p->getTitle();}, $this->publications->toArray());
+        }
         return $this->publications;
     }
 
