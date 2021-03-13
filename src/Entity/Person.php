@@ -27,7 +27,7 @@ use Nines\UtilBundle\Entity\AbstractEntity;
  * })
  * @ORM\Entity(repositoryClass="App\Repository\PersonRepository")
  *
- * @Solr\Document(facet="Person")
+ * @Solr\Document()
  */
 class Person extends AbstractEntity implements LinkableInterface {
     use HasContributions {
@@ -81,7 +81,8 @@ class Person extends AbstractEntity implements LinkableInterface {
      * @var string
      * @ORM\Column(type="text", nullable=true)
      *
-     * @Solr\Field(type="text")
+     * ENT_QUOTES | ENT_HTML5 === 51
+     * @Solr\Field(type="text", filters={"strip_tags", "html_entity_decode(51, 'UTF-8')"})
      */
     private $description;
 

@@ -19,7 +19,7 @@ use Nines\SolrBundle\Annotation as Solr;
  * @ORM\Table(name="periodical")
  * @ORM\Entity(repositoryClass="App\Repository\PeriodicalRepository")
  *
- * @Solr\Document(facet="Periodical")
+ * @Solr\Document()
  */
 class Periodical extends Publication {
     /**
