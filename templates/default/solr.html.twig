@@ -56,7 +56,7 @@
             <div style='outline: 1px solid lightgrey; margin: 3px; padding: 3px;'>
                 {% set document = qr.getDocument(i) %}
                 {% set entity = qr.entity(i) %}
-                <b>{{ document.type_s }}: {{ entity }}</b><br />
+                <b>{{ document.type_s }}: <a href='{{ entity_linker.link(entity) }}'>{{ entity }}</a></b><br />
                 {% for h in qr.getHighlighting(i) %}
                     {{ h|join("...")|raw }}
                 {% endfor %}

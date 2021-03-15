@@ -16,6 +16,7 @@ twig:
         text_service: '@Nines\UtilBundle\Services\Text'
         image_manager: '@Nines\MediaBundle\Service\ImageManager'
         link_manager: '@Nines\MediaBundle\Service\LinkManager'
+        entity_linker: '@Nines\UtilBundle\Services\EntityLinker'
         piwik_enabled: '%dhil.piwik_enabled%'
         piwik_url: '%dhil.piwik_url%'
         piwik_siteid: '%dhil.piwik_siteid%'
