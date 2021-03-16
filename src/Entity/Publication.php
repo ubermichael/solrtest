@@ -436,12 +436,15 @@ abstract class Publication extends AbstractEntity implements LinkableInterface {
     /**
      * Get publishers.
      *
+     * @param mixed $flat
+     *
      * @return Collection
      */
     public function getPublishers($flat = false) {
-        if($flat) {
-            return array_map(function(Publisher $p) {return $p->getName();}, $this->publishers->toArray());
+        if ($flat) {
+            return array_map(function (Publisher $p) {return $p->getName(); }, $this->publishers->toArray());
         }
+
         return $this->publishers;
     }
 

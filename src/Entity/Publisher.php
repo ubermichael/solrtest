@@ -13,8 +13,8 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Nines\UtilBundle\Entity\AbstractEntity;
 use Nines\SolrBundle\Annotation as Solr;
+use Nines\UtilBundle\Entity\AbstractEntity;
 
 /**
  * Publisher.
@@ -24,7 +24,7 @@ use Nines\SolrBundle\Annotation as Solr;
  * })
  * @ORM\Entity(repositoryClass="App\Repository\PublisherRepository")
  *
- * @Solr\Document()
+ * @Solr\Document
  */
 class Publisher extends AbstractEntity {
     use HasPublications {
@@ -119,9 +119,10 @@ class Publisher extends AbstractEntity {
     }
 
     public function getPlaces($flatten = false) {
-        if($flatten) {
-            return array_map(function(Place $p){return $p->getName();}, $this->places->toArray());
+        if ($flatten) {
+            return array_map(function (Place $p) {return $p->getName(); }, $this->places->toArray());
         }
+
         return $this->places;
     }
 
@@ -139,10 +140,11 @@ class Publisher extends AbstractEntity {
         return $this;
     }
 
-    public function getPublications($flatten)  {
-        if($flatten) {
-            return array_map(function(Publication $p){return $p->getTitle();}, $this->publications->toArray());
+    public function getPublications($flatten) {
+        if ($flatten) {
+            return array_map(function (Publication $p) {return $p->getTitle(); }, $this->publications->toArray());
         }
+
         return $this->publications;
     }
 

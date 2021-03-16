@@ -11,7 +11,6 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 
 /**
  * Description of PublicationTrait.
@@ -47,6 +46,7 @@ trait HasContributions {
      * Get contributions.
      *
      * @param mixed $sort
+     * @param mixed $flat
      *
      * @return Contribution[]
      */
@@ -95,12 +95,13 @@ trait HasContributions {
         }
 
         usort($data, $cmp);
-        switch($flat) {
+        switch ($flat) {
             case 'person':
-                return array_map(function(Contribution $c) {return $c->getPerson()->getFullName();}, $data);
+                return array_map(function (Contribution $c) {return $c->getPerson()->getFullName(); }, $data);
             case 'title':
-                return array_map(function(Contribution $c) {return $c->getPublication()->getTitle();}, $data);
+                return array_map(function (Contribution $c) {return $c->getPublication()->getTitle(); }, $data);
         }
+
         return $data;
     }
 }

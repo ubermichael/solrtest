@@ -19,7 +19,7 @@ use Nines\SolrBundle\Annotation as Solr;
  * @ORM\Table(name="collection")
  * @ORM\Entity(repositoryClass="App\Repository\CompilationRepository")
  *
- * @Solr\Document()
+ * @Solr\Document
  */
 class Compilation extends Publication {
     public function getCategory() {

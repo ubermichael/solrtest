@@ -27,7 +27,7 @@ use Nines\UtilBundle\Entity\AbstractEntity;
  * })
  * @ORM\Entity(repositoryClass="App\Repository\PersonRepository")
  *
- * @Solr\Document()
+ * @Solr\Document
  */
 class Person extends AbstractEntity implements LinkableInterface {
     use HasContributions {
