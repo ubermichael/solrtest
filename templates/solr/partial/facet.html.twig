@@ -1,0 +1,21 @@
+{# @var facet array #}
+{# @var string header #}
+{# @var string filter #}
+{% if facet|length > 0 %}
+    {% set queryParams = app.request.query.all %}
+    <h3>{{ header }}</h3>
+    {% for k,v in facet %}
+        {% set checked %}
+            {% apply spaceless %}
+                {% if (filter in queryParams['filter']|keys) and (k in queryParams['filter'][filter]) %}
+                    checked='checked'
+                {% endif %}
+            {% endapply %}
+        {% endset %}
+        <div class='checkbox'>
+            <label> <input type='checkbox' name='filter[{{ filter }}][]' value='{{ k }}' {{ checked }}>
+                {{ k }}: {{ v }}
+            </label>
+        </div>
+    {% endfor %}
+{% endif %}

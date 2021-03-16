@@ -17,6 +17,7 @@ use Nines\SolrBundle\Client\Builder;
 use Nines\SolrBundle\Query\Result;
 use Nines\UtilBundle\Controller\PaginatorTrait;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Solarium\QueryType\Select\Query\FilterQuery;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -47,6 +48,7 @@ class DefaultController extends AbstractController implements PaginatorAwareInte
      */
     public function solrAction(Request $request, Builder $builder, EntityManagerInterface $em, PaginatorInterface $paginator) {
         $q = $request->query->get('q');
+        $filters = $request->query->get('filter', []);
         $page = (int)$request->query->get('page', 1);
         $pageSize = 10; //(int)$this->getParameter('page_size');
         $qr = null;
@@ -60,13 +62,22 @@ class DefaultController extends AbstractController implements PaginatorAwareInte
 
             $query->setQuery($q);
             $query->setQueryDefaultField('content_txt');
+
+            foreach($filters as $key => $values) {
+                $terms = join(" or ", $values);
+                $query->createFilterQuery('fq_' . $key)->addTag('exclude')->setQuery("{$key}:({$terms})");
+            }
+
             $hl = $query->getHighlighting();
             $hl->setFields('content_txt');
             $hl->setSimplePrefix("<span class='hl'>");
             $hl->setSimplePostfix('</span>');
 
             $fs = $query->getFacetSet();
-            $fs->createFacetField('type')->setField('type_s');
+            $fs->createFacetField('type')->setField('type_s')->getLocalParameters()->addExcludes(['exclude']);
+            $fs->createFacetField('genre')->setField('genres_ss')->getLocalParameters()->addExcludes(['exclude']);
+
+            dump($query);
 
             $paginated = $paginator->paginate([$client, $query], $page, $pageSize);
             $qr = new Result($paginated->getCustomParameter('result'), $em, $paginator);
