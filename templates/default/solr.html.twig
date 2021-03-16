@@ -36,6 +36,7 @@
         </div>
         <div class='row'>
             <div class='col-sm-3'>
+                {% if qr %}
                 {% include 'solr/partial/facet.html.twig' with {
                     'facet': qr.getFacet('type'),
                     'filter': 'type_s',
@@ -47,6 +48,7 @@
                     'filter': 'genres_ss',
                     'header': 'Genres'
                 } %}
+                {% endif %}
             </div>
             <div class='col-sm-9'>
                 {% if qr and qr.count > 0 %}

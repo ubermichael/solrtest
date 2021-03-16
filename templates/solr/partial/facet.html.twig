@@ -7,7 +7,7 @@
     {% for k,v in facet %}
         {% set checked %}
             {% apply spaceless %}
-                {% if (filter in queryParams['filter']|keys) and (k in queryParams['filter'][filter]) %}
+                {% if ('filter' in queryParams|keys) and (filter in queryParams['filter']|keys) and (k in queryParams['filter'][filter]) %}
                     checked='checked'
                 {% endif %}
             {% endapply %}
