@@ -13,7 +13,12 @@ namespace App\Controller;
 use App\Entity\Person;
 use App\Form\PersonType;
 use App\Repository\PersonRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
+use Knp\Component\Pager\PaginatorInterface;
+use Nines\SolrBundle\Logging\SolrLogger;
+use Nines\SolrBundle\Query\QueryBuilder;
+use Nines\SolrBundle\Query\Result;
 use Nines\UtilBundle\Controller\PaginatorTrait;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -51,18 +56,47 @@ class PersonController extends AbstractController implements PaginatorAwareInter
      *
      * @return array
      */
-    public function search(Request $request, PersonRepository $personRepository) {
+    public function search(Request $request, SolrLogger $logger, QueryBuilder $qb, EntityManagerInterface $em, PaginatorInterface $paginator) {
         $q = $request->query->get('q');
+        $filters = $request->query->get('filter', []);
+        $filterRanges = $request->query->get('filter_range', []);
+        $page = (int) $request->query->get('page', 1);
+        $pageSize = (int)$this->getParameter('page_size');
+        $qr = null;
+        $paginated = null;
+
         if ($q) {
-            $query = $personRepository->searchQuery($q);
-            $people = $this->paginator->paginate($query, $request->query->getInt('page', 1), $this->getParameter('page_size'), ['wrap-queries' => true]);
-        } else {
-            $people = [];
+            $qb->setQueryString($q);
+            $qb->setDefaultField("content_txt");
+
+            foreach ($filters as $key => $values) {
+                $qb->addFilter($key, $values);
+            }
+
+            foreach($filterRanges as $key => $values) {
+                foreach($values as $range) {
+                    list($start, $end) = explode(" ", $range);
+                    $qb->addFilterRange($key, $start, $end);
+                }
+            }
+            $qb->addFilter('type_s', ['Person']);
+            $qb->setHighlightFields('content_txt');
+
+            $qb->addFacetField('birth_place', 'birth_place_s');
+            $qb->addFacetField('death_place', 'death_place_s');
+            $qb->addFacetRange('birth_date', 'birth_date_i', 1600, 2020, 50);
+            $query = $qb->getQuery();
+
+            $logger->startQuery($query);
+            $paginated = $paginator->paginate([$qb->getClient(), $query], $page, $pageSize);
+            $qr = new Result($paginated->getCustomParameter('result'), $em, $paginator);
+            $logger->stopQuery();
         }
 
         return [
-            'people' => $people,
             'q' => $q,
+            'qr' => $qr,
+            'pagination' => $paginated,
         ];
     }
 

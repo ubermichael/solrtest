@@ -1,56 +1,89 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Person Search{% endblock %}
+{% block title %}Search{% endblock %}
 
- {% block pageheader %} 
-    <h1>Person Search</h1>
-    {% if people|length %}
-    <p class="count">
-        Displaying {{ people|length }} people of {{ people.getTotalItemCount }} total.
-    </p>
-	{% endif %}
- {% endblock %} 
+ {% block pageheader %}
+     <h1>Search</h1>
+ {% endblock %}
 
 {% block body %}
 
     <form method="get" action="{{ path('person_search') }}" class="form-horizontal">
-        <fieldset>
-            <legend>Search</legend>
-            <div class='form-group'>
-                <label class='col-sm-2 control-label' for='q'>Search term</label>
-                <div class='col-sm-10'>
-                    <div class='input-group'>
-                        <input type='text' name='q' id='q' class='form-control' value='{{ q }}'>
-                        <span class="input-group-btn">
-                            <button class="btn btn-primary" id='btn-search' type="submit">
-                                <span class='glyphicon glyphicon-search'></span>
-                                Search
-                            </button>
-                        </span>
+        <div class='row'>
+            <div class='col-sm-12'>
+                <fieldset>
+                    <div class='form-group'>
+                        <label class='col-sm-2 control-label' for='q'>Search term</label>
+                        <div class='col-sm-10'>
+                            <div class='input-group'>
+                                <input type='text' name='q' id='q' class='form-control' value='{{ q }}'>
+                                <span class="input-group-btn">
+                                    <button class="btn btn-primary" id='btn-search' type="submit">
+                                        <span class='glyphicon glyphicon-search'></span>
+                                        Search
+                                    </button>
+                                    {% if q %}
+                                        <a class="btn btn-warning" href='{{ path('person_search') }}'>
+                                            <span class='glyphicon glyphicon-refresh'></span>
+                                                Reset
+                                        </a>
+                                    {% endif %}
+                                </span>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                </fieldset>
             </div>
-            <p>	Full text searching options, if available:</p>
-            <ul>
-                <li><code>shakespeare</code> - shakespeare should be present, but might not be</li>
-                <li><code>shakes*</code> - words starting with shakes should be present</li>
-                <li><code>+agnes</code> - agnes must be present</li>
-                <li><code>-fisher</code> - fisher must not be present</li>
-                <li>Combinations are OK: <code>+agnes -fisher</code> finds Anges who isn't a Fisher</li>
-                <li>Phrases are OK: <code>"nee agnes"</code> finds rows that contain the literal phrase.
-            </ul>
-        </fieldset>
+        </div>
+        <div class='row'>
+            <div class='col-sm-3'>
+                {% if qr %}
+                    {% include 'solr/partial/facet.html.twig' with {
+                        'facet': qr.getFacet('birth_place'),
+                        'filter': 'birth_place_s',
+                        'header': 'Birth Place'
+                    } %}
+
+                    {% include 'solr/partial/facet.html.twig' with {
+                        'facet': qr.getFacet('death_place'),
+                        'filter': 'death_place_s',
+                        'header': 'Death Place'
+                    } %}
+
+                    {% include 'solr/partial/facet_range.html.twig' with {
+                        'facet': qr.getFacet('birth_date'),
+                        'filter': 'birth_date_i',
+                        'header': 'Birth Date'
+                    } %}
+                {% endif %}
+            </div>
+            <div class='col-sm-9'>
+                {% if qr and qr.count > 0 %}
+                    {% set pageData = pagination.getPaginationData %}
+                    <h3>Results</h3>
+                    <p class="count">
+                        Found {{ pagination|length }} results. Showing page {{ pagination.getCurrentPageNumber }} of {{ pagination.getPageCount }}
+                        with results from {{ pageData.firstItemNumber }} to {{ pageData.lastItemNumber }} of {{ pagination.getTotalItemCount }} total.
+                    </p>
+                    <div class='list-group'>
+                        {% for i in 0..(qr.count-1) %}
+                            {% set document = qr.getDocument(i) %}
+                            {% set entity = qr.entity(i) %}
+                            <a href='{{ entity_linker.link(entity) }}' class='list-group-item'> <b>{{ document.type_s }}
+                                    : {{ entity }}</b><br />
+                                {% for h in qr.getHighlighting(i) %}
+                                    {{ h|join("...")|raw }}
+                                {% endfor %}
+                            </a>
+                        {% endfor %}
+                    </div>
+
+                    <div class="navigation">
+                        {{ knp_pagination_render(pagination) }}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
     </form>
 
-	{% if people|length %}
-
-  {% embed 'person/partial/table.html.twig' %}
-  {% endembed %}
-
-    <div class="navigation">
-        {{ knp_pagination_render(people) }}
-    </div>
-	{% endif %}
-
 {% endblock %}
-

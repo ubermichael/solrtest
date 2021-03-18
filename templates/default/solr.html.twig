@@ -53,9 +53,11 @@
             </div>
             <div class='col-sm-9'>
                 {% if qr and qr.count > 0 %}
+                    {% set pageData = pagination.getPaginationData %}
                     <h3>Results</h3>
                     <p class="count">
-                        Displaying {{ qr.count }} results from {{ start }} to {{ end }} of {{ qr.total }} total.
+                        Found {{ pagination|length }} results. Showing page {{ pagination.getCurrentPageNumber }} of {{ pagination.getPageCount }}
+                        with results from {{ pageData.firstItemNumber }} to {{ pageData.lastItemNumber }} of {{ pagination.getTotalItemCount }} total.
                     </p>
 
                     <div class='list-group'>

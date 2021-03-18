@@ -104,7 +104,7 @@ class Person extends AbstractEntity implements LinkableInterface {
      * @var DateYear
      * @ORM\OneToOne(targetEntity="DateYear", cascade={"persist", "remove"}, orphanRemoval=true)
      *
-     * @Solr\Field(type="text", mutator="__toString")
+     * @Solr\Field(type="integer", getter="getBirthYear")
      */
     private $birthDate;
 
@@ -112,7 +112,7 @@ class Person extends AbstractEntity implements LinkableInterface {
      * @var Place
      * @ORM\ManyToOne(targetEntity="Place", inversedBy="peopleBorn")
      *
-     * @Solr\Field(type="text", mutator="getName")
+     * @Solr\Field(type="string", mutator="getName")
      */
     private $birthPlace;
 
@@ -120,7 +120,7 @@ class Person extends AbstractEntity implements LinkableInterface {
      * @var DateYear
      * @ORM\OneToOne(targetEntity="DateYear", cascade={"persist", "remove"}, orphanRemoval=true)
      *
-     * @Solr\Field(type="text", mutator="__toString")
+     * @Solr\Field(type="integer", getter="getDeathYear")
      */
     private $deathDate;
 
@@ -128,7 +128,7 @@ class Person extends AbstractEntity implements LinkableInterface {
      * @var Place;
      * @ORM\ManyToOne(targetEntity="Place", inversedBy="peopleDied")
      *
-     * @Solr\Field(type="text", mutator="getName")
+     * @Solr\Field(type="string", mutator="getName")
      */
     private $deathPlace;
 
@@ -295,6 +295,13 @@ class Person extends AbstractEntity implements LinkableInterface {
         return $this->birthDate;
     }
 
+    public function getBirthYear() {
+        if($this->birthDate) {
+            return $this->birthDate->getStart(false);
+        }
+        return null;
+    }
+
     /**
      * Set birthPlace.
      *
@@ -341,6 +348,13 @@ class Person extends AbstractEntity implements LinkableInterface {
      */
     public function getDeathDate() {
         return $this->deathDate;
+    }
+
+    public function getDeathYear() {
+        if($this->deathDate) {
+            return $this->deathDate->getStart(false);
+        }
+        return null;
     }
 
     /**
