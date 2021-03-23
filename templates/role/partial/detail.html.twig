@@ -1,0 +1,50 @@
+
+<table class='table table-bordered table-condensed table-hover table-striped'>
+    <tbody>
+        <tr>
+            <th>Name</th>
+            <td>
+                                                            {{ role.name }}
+                                  </td>
+          </tr>
+          <tr>
+            <th>Label</th>
+            <td>
+                                                            {{ role.label }}
+                                  </td>
+          </tr>
+          <tr>
+            <th>Description</th>
+            <td>
+                                                            {{ role.description|raw }}
+                                  </td>
+          </tr>
+          
+                                                                  <tr>
+                <th>Contribution</th>
+                <td>
+                  {% if role.contributions|length > 0 %}
+                  <ul>
+                      {% for contribution in role.contributions %} 
+                      <li>
+                          <a href='{{ path("contribution_show", {"id":contribution.id }) }}'>
+                              {{ contribution }}
+                          </a>
+                      </li>
+                      {% endfor %}
+                  </ul>
+                  {% endif %}
+                </td>
+              </tr>
+          <tr>
+        <th>Created</th>
+        <td>{{ role.created|date }}</td>
+    </tr>
+    <tr>
+        <th>Updated</th>
+        <td>{{ role.updated|date }}</td>
+    </tr>
+    </tbody>
+</table>
+
+

@@ -1,5 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Menu;
 
 use Knp\Menu\FactoryInterface;
@@ -12,7 +20,8 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 /**
  * Class to build some menus for navigation.
  */
-class Builder implements ContainerAwareInterface {
+class Builder implements ContainerAwareInterface
+{
     use ContainerAwareTrait;
 
     /**
@@ -45,10 +54,10 @@ class Builder implements ContainerAwareInterface {
     }
 
     /**
-    * Build a menu for entities.
-    *
-    * @return ItemInterface
-    */
+     * Build a menu for entities.
+     *
+     * @return ItemInterface
+     */
     public function mainMenu(array $options) {
         $menu = $this->factory->createItem('root');
         $menu->setChildrenAttributes([
@@ -58,21 +67,48 @@ class Builder implements ContainerAwareInterface {
 
         $browse = $menu->addChild('Browse', [
             'uri' => '#',
-            'label' => 'Media',
+            'label' => 'Browse',
         ]);
         $browse->setAttribute('dropdown', true);
         $browse->setLinkAttribute('class', 'dropdown-toggle');
         $browse->setLinkAttribute('data-toggle', 'dropdown');
         $browse->setChildrenAttribute('class', 'dropdown-menu');
 
-                    $browse->addChild('Book', [
-                'route' => 'book_index',
-            ]);
-                    $browse->addChild('Person', [
-                'route' => 'person_index',
-            ]);
-        
-        if($this->hasRole('ROLE_CONTENT_ADMIN')) {
+        $browse->addChild('Alias', [
+            'route' => 'alias_index',
+        ]);
+        $browse->addChild('Book', [
+            'route' => 'book_index',
+        ]);
+        $browse->addChild('Compilation', [
+            'route' => 'compilation_index',
+        ]);
+        $browse->addChild('Contribution', [
+            'route' => 'contribution_index',
+        ]);
+        $browse->addChild('Date Year', [
+            'route' => 'date_year_index',
+        ]);
+        $browse->addChild('Genre', [
+            'route' => 'genre_index',
+        ]);
+        $browse->addChild('Periodical', [
+            'route' => 'periodical_index',
+        ]);
+        $browse->addChild('Person', [
+            'route' => 'person_index',
+        ]);
+        $browse->addChild('Place', [
+            'route' => 'place_index',
+        ]);
+        $browse->addChild('Publisher', [
+            'route' => 'publisher_index',
+        ]);
+        $browse->addChild('Role', [
+            'route' => 'role_index',
+        ]);
+
+        if ($this->hasRole('ROLE_CONTENT_ADMIN')) {
             $browse->addChild('content_divider', [
                 'label' => '',
             ]);
@@ -85,7 +121,7 @@ class Builder implements ContainerAwareInterface {
             ]);
         }
 
-        if($this->hasRole('ROLE_ADMIN')) {
+        if ($this->hasRole('ROLE_ADMIN')) {
             $browse->addChild('admin_divider', [
                 'label' => '',
             ]);
@@ -102,10 +138,10 @@ class Builder implements ContainerAwareInterface {
     }
 
     /**
-    * Build a menu for the footer.
-    *
-    * @return ItemInterface
-    */
+     * Build a menu for the footer.
+     *
+     * @return ItemInterface
+     */
     public function footerMenu(array $options) {
         $menu = $this->factory->createItem('root');
         $menu->setChildrenAttributes([
@@ -121,5 +157,4 @@ class Builder implements ContainerAwareInterface {
 
         return $menu;
     }
-
 }
