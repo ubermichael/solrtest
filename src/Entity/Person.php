@@ -29,7 +29,8 @@ use Nines\UtilBundle\Entity\AbstractEntity;
  *
  * @Solr\Document
  */
-class Person extends AbstractEntity implements LinkableInterface {
+class Person extends AbstractEntity implements LinkableInterface
+{
     use HasContributions {
         HasContributions::__construct as private trait_constructor;
         getContributions as private traitContributions;
@@ -296,10 +297,9 @@ class Person extends AbstractEntity implements LinkableInterface {
     }
 
     public function getBirthYear() {
-        if($this->birthDate) {
+        if ($this->birthDate) {
             return $this->birthDate->getStart(false);
         }
-        return null;
     }
 
     /**
@@ -351,10 +351,9 @@ class Person extends AbstractEntity implements LinkableInterface {
     }
 
     public function getDeathYear() {
-        if($this->deathDate) {
+        if ($this->deathDate) {
             return $this->deathDate->getStart(false);
         }
-        return null;
     }
 
     /**

@@ -21,7 +21,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Alias form.
  */
-class AliasType extends AbstractType {
+class AliasType extends AbstractType
+{
     /**
      * Add form fields to $builder.
      */

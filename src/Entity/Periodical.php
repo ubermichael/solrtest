@@ -21,7 +21,8 @@ use Nines\SolrBundle\Annotation as Solr;
  *
  * @Solr\Document
  */
-class Periodical extends Publication {
+class Periodical extends Publication
+{
     /**
      * @var string
      * @ORM\Column(type="string", length=48, nullable=true)

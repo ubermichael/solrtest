@@ -14,7 +14,8 @@ use App\Entity\DateYear;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
-class DateYearFixtures extends Fixture {
+class DateYearFixtures extends Fixture
+{
     /**
      * {@inheritDoc}
      */

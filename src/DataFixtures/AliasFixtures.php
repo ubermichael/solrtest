@@ -14,7 +14,8 @@ use App\Entity\Alias;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
-class AliasFixtures extends Fixture {
+class AliasFixtures extends Fixture
+{
     /**
      * {@inheritDoc}
      */

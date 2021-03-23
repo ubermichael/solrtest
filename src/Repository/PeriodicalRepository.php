@@ -20,7 +20,8 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Periodical[]    findAll()
  * @method Periodical[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class PeriodicalRepository extends ServiceEntityRepository {
+class PeriodicalRepository extends ServiceEntityRepository
+{
     public function __construct(ManagerRegistry $registry) {
         parent::__construct($registry, Periodical::class);
     }

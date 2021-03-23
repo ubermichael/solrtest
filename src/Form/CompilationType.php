@@ -24,7 +24,8 @@ use Tetranz\Select2EntityBundle\Form\Type\Select2EntityType;
 /**
  * Compilation form.
  */
-class CompilationType extends AbstractType {
+class CompilationType extends AbstractType
+{
     /**
      * Add form fields to $builder.
      */

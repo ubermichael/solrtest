@@ -31,7 +31,8 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/person")
  */
-class PersonController extends AbstractController implements PaginatorAwareInterface {
+class PersonController extends AbstractController implements PaginatorAwareInterface
+{
     use PaginatorTrait;
 
     /**
@@ -61,21 +62,21 @@ class PersonController extends AbstractController implements PaginatorAwareInter
         $filters = $request->query->get('filter', []);
         $filterRanges = $request->query->get('filter_range', []);
         $page = (int) $request->query->get('page', 1);
-        $pageSize = (int)$this->getParameter('page_size');
+        $pageSize = (int) $this->getParameter('page_size');
         $qr = null;
         $paginated = null;
 
         if ($q) {
             $qb->setQueryString($q);
-            $qb->setDefaultField("content_txt");
+            $qb->setDefaultField('content_txt');
 
             foreach ($filters as $key => $values) {
                 $qb->addFilter($key, $values);
             }
 
-            foreach($filterRanges as $key => $values) {
-                foreach($values as $range) {
-                    list($start, $end) = explode(" ", $range);
+            foreach ($filterRanges as $key => $values) {
+                foreach ($values as $range) {
+                    list($start, $end) = explode(' ', $range);
                     $qb->addFilterRange($key, $start, $end);
                 }
             }

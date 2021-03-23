@@ -21,7 +21,8 @@ use Nines\SolrBundle\Annotation as Solr;
  *
  * @Solr\Document
  */
-class Book extends Publication {
+class Book extends Publication
+{
     public function getCategory() {
         return self::BOOK;
     }

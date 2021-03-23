@@ -13,7 +13,6 @@ namespace App\Controller;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Knp\Component\Pager\PaginatorInterface;
-use Nines\SolrBundle\Client\ClientBuilder;
 use Nines\SolrBundle\Logging\SolrLogger;
 use Nines\SolrBundle\Query\QueryBuilder;
 use Nines\SolrBundle\Query\Result;
@@ -23,7 +22,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-class DefaultController extends AbstractController implements PaginatorAwareInterface {
+class DefaultController extends AbstractController implements PaginatorAwareInterface
+{
     use PaginatorTrait;
 
     /**
@@ -51,7 +51,7 @@ class DefaultController extends AbstractController implements PaginatorAwareInte
         $q = $request->query->get('q');
         $filters = $request->query->get('filter', []);
         $page = (int) $request->query->get('page', 1);
-        $pageSize = (int)$this->getParameter('page_size');
+        $pageSize = (int) $this->getParameter('page_size');
         $qr = null;
         $paginated = null;
         if ($q) {

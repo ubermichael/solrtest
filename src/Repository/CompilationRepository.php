@@ -20,7 +20,8 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Compilation[]    findAll()
  * @method Compilation[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class CompilationRepository extends ServiceEntityRepository {
+class CompilationRepository extends ServiceEntityRepository
+{
     public function __construct(ManagerRegistry $registry) {
         parent::__construct($registry, Compilation::class);
     }

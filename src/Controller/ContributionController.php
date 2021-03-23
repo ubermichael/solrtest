@@ -26,7 +26,8 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/contribution")
  */
-class ContributionController extends AbstractController implements PaginatorAwareInterface {
+class ContributionController extends AbstractController implements PaginatorAwareInterface
+{
     use PaginatorTrait;
 
     /**

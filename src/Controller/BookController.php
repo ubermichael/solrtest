@@ -26,7 +26,8 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/book")
  */
-class BookController extends AbstractController implements PaginatorAwareInterface {
+class BookController extends AbstractController implements PaginatorAwareInterface
+{
     use PaginatorTrait;
 
     /**

@@ -14,7 +14,8 @@ use App\Entity\Place;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
-class PlaceFixtures extends Fixture {
+class PlaceFixtures extends Fixture
+{
     /**
      * {@inheritDoc}
      */

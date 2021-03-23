@@ -24,7 +24,8 @@ use Tetranz\Select2EntityBundle\Form\Type\Select2EntityType;
 /**
  * Periodical form.
  */
-class PeriodicalType extends AbstractType {
+class PeriodicalType extends AbstractType
+{
     /**
      * Add form fields to $builder.
      */
