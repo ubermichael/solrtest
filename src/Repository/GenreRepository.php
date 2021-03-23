@@ -12,7 +12,10 @@ namespace App\Repository;
 
 use App\Entity\Genre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
+use RuntimeException;
 
 /**
  * @method null|Genre find($id, $lockMode = null, $lockVersion = null)
@@ -26,32 +29,73 @@ class GenreRepository extends ServiceEntityRepository
         parent::__construct($registry, Genre::class);
     }
 
-    // /**
-    //  * @return Genre[] Returns an array of Genre objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('g')
-            ->andWhere('g.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('g.id', 'ASC')
-            ->setMaxResults(10)
+    /**
+     * @return Query
+     */
+    public function indexQuery() {
+        return $this->createQueryBuilder('genre')
+            ->orderBy('genre.id')
             ->getQuery()
-            ->getResult()
         ;
     }
-     */
 
-    /*
-    public function findOneBySomeField($value): ?Genre
-    {
-        return $this->createQueryBuilder('g')
-            ->andWhere('g.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
+    /**
+     * @param string $q
+     *
+     * @return Collection|Genre[]
      */
+    public function typeaheadQuery($q) {
+        throw new RuntimeException('Not implemented yet.');
+        $qb = $this->createQueryBuilder('genre');
+        $qb->andWhere('genre.column LIKE :q');
+        $qb->orderBy('genre.column', 'ASC');
+        $qb->setParameter('q', "{$q}%");
+
+        return $qb->getQuery()->execute();
+    }
+
+    /**
+     * @param string $q
+     *
+     * @return Query
+     */
+    public function searchLabelQuery($q) {
+        $qb = $this->createQueryBuilder('genre');
+        $qb->addSelect('MATCH (genre.label) AGAINST(:q BOOLEAN) as HIDDEN score');
+        $qb->andHaving('score > 0');
+        $qb->orderBy('score', 'DESC');
+        $qb->setParameter('q', $q);
+
+        return $qb->getQuery();
+    }
+
+    /**
+     * @param string $q
+     *
+     * @return Query
+     */
+    public function searchDescriptionQuery($q) {
+        $qb = $this->createQueryBuilder('genre');
+        $qb->addSelect('MATCH (genre.description) AGAINST(:q BOOLEAN) as HIDDEN score');
+        $qb->andHaving('score > 0');
+        $qb->orderBy('score', 'DESC');
+        $qb->setParameter('q', $q);
+
+        return $qb->getQuery();
+    }
+
+    /**
+     * @param string $q
+     *
+     * @return Query
+     */
+    public function searchLabelDescriptionQuery($q) {
+        $qb = $this->createQueryBuilder('genre');
+        $qb->addSelect('MATCH (genre.label, genre.description) AGAINST(:q BOOLEAN) as HIDDEN score');
+        $qb->andHaving('score > 0');
+        $qb->orderBy('score', 'DESC');
+        $qb->setParameter('q', $q);
+
+        return $qb->getQuery();
+    }
 }

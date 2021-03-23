@@ -11,9 +11,9 @@ declare(strict_types=1);
 namespace App\Form;
 
 use App\Entity\Contribution;
-    use App\Entity\Person;
-    use App\Entity\Publication;
-    use App\Entity\Role;
+use App\Entity\Person;
+use App\Entity\Publication;
+use App\Entity\Role;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;

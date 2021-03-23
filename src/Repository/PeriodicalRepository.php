@@ -12,7 +12,10 @@ namespace App\Repository;
 
 use App\Entity\Periodical;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
+use RuntimeException;
 
 /**
  * @method null|Periodical find($id, $lockMode = null, $lockVersion = null)
@@ -26,32 +29,28 @@ class PeriodicalRepository extends ServiceEntityRepository
         parent::__construct($registry, Periodical::class);
     }
 
-    // /**
-    //  * @return Periodical[] Returns an array of Periodical objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
+    /**
+     * @return Query
+     */
+    public function indexQuery() {
+        return $this->createQueryBuilder('periodical')
+            ->orderBy('periodical.id')
             ->getQuery()
-            ->getResult()
         ;
     }
-     */
 
-    /*
-    public function findOneBySomeField($value): ?Periodical
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
+    /**
+     * @param string $q
+     *
+     * @return Collection|Periodical[]
      */
+    public function typeaheadQuery($q) {
+        throw new RuntimeException('Not implemented yet.');
+        $qb = $this->createQueryBuilder('periodical');
+        $qb->andWhere('periodical.column LIKE :q');
+        $qb->orderBy('periodical.column', 'ASC');
+        $qb->setParameter('q', "{$q}%");
+
+        return $qb->getQuery()->execute();
+    }
 }

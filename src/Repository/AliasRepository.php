@@ -12,7 +12,10 @@ namespace App\Repository;
 
 use App\Entity\Alias;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
+use RuntimeException;
 
 /**
  * @method null|Alias find($id, $lockMode = null, $lockVersion = null)
@@ -26,32 +29,43 @@ class AliasRepository extends ServiceEntityRepository
         parent::__construct($registry, Alias::class);
     }
 
-    // /**
-    //  * @return Alias[] Returns an array of Alias objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
+    /**
+     * @return Query
+     */
+    public function indexQuery() {
+        return $this->createQueryBuilder('alias')
+            ->orderBy('alias.id')
             ->getQuery()
-            ->getResult()
         ;
     }
-     */
 
-    /*
-    public function findOneBySomeField($value): ?Alias
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
+    /**
+     * @param string $q
+     *
+     * @return Alias[]|Collection
      */
+    public function typeaheadQuery($q) {
+        throw new RuntimeException('Not implemented yet.');
+        $qb = $this->createQueryBuilder('alias');
+        $qb->andWhere('alias.column LIKE :q');
+        $qb->orderBy('alias.column', 'ASC');
+        $qb->setParameter('q', "{$q}%");
+
+        return $qb->getQuery()->execute();
+    }
+
+    /**
+     * @param string $q
+     *
+     * @return Query
+     */
+    public function searchNameQuery($q) {
+        $qb = $this->createQueryBuilder('alias');
+        $qb->addSelect('MATCH (alias.name) AGAINST(:q BOOLEAN) as HIDDEN score');
+        $qb->andHaving('score > 0');
+        $qb->orderBy('score', 'DESC');
+        $qb->setParameter('q', $q);
+
+        return $qb->getQuery();
+    }
 }

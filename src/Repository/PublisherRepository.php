@@ -12,7 +12,10 @@ namespace App\Repository;
 
 use App\Entity\Publisher;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
+use RuntimeException;
 
 /**
  * @method null|Publisher find($id, $lockMode = null, $lockVersion = null)
@@ -26,32 +29,43 @@ class PublisherRepository extends ServiceEntityRepository
         parent::__construct($registry, Publisher::class);
     }
 
-    // /**
-    //  * @return Publisher[] Returns an array of Publisher objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
+    /**
+     * @return Query
+     */
+    public function indexQuery() {
+        return $this->createQueryBuilder('publisher')
+            ->orderBy('publisher.id')
             ->getQuery()
-            ->getResult()
         ;
     }
-     */
 
-    /*
-    public function findOneBySomeField($value): ?Publisher
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
+    /**
+     * @param string $q
+     *
+     * @return Collection|Publisher[]
      */
+    public function typeaheadQuery($q) {
+        throw new RuntimeException('Not implemented yet.');
+        $qb = $this->createQueryBuilder('publisher');
+        $qb->andWhere('publisher.column LIKE :q');
+        $qb->orderBy('publisher.column', 'ASC');
+        $qb->setParameter('q', "{$q}%");
+
+        return $qb->getQuery()->execute();
+    }
+
+    /**
+     * @param string $q
+     *
+     * @return Query
+     */
+    public function searchNameQuery($q) {
+        $qb = $this->createQueryBuilder('publisher');
+        $qb->addSelect('MATCH (publisher.name) AGAINST(:q BOOLEAN) as HIDDEN score');
+        $qb->andHaving('score > 0');
+        $qb->orderBy('score', 'DESC');
+        $qb->setParameter('q', $q);
+
+        return $qb->getQuery();
+    }
 }

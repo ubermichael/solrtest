@@ -12,7 +12,10 @@ namespace App\Repository;
 
 use App\Entity\Contribution;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
+use RuntimeException;
 
 /**
  * @method null|Contribution find($id, $lockMode = null, $lockVersion = null)
@@ -26,32 +29,28 @@ class ContributionRepository extends ServiceEntityRepository
         parent::__construct($registry, Contribution::class);
     }
 
-    // /**
-    //  * @return Contribution[] Returns an array of Contribution objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
+    /**
+     * @return Query
+     */
+    public function indexQuery() {
+        return $this->createQueryBuilder('contribution')
+            ->orderBy('contribution.id')
             ->getQuery()
-            ->getResult()
         ;
     }
-     */
 
-    /*
-    public function findOneBySomeField($value): ?Contribution
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
+    /**
+     * @param string $q
+     *
+     * @return Collection|Contribution[]
      */
+    public function typeaheadQuery($q) {
+        throw new RuntimeException('Not implemented yet.');
+        $qb = $this->createQueryBuilder('contribution');
+        $qb->andWhere('contribution.column LIKE :q');
+        $qb->orderBy('contribution.column', 'ASC');
+        $qb->setParameter('q', "{$q}%");
+
+        return $qb->getQuery()->execute();
+    }
 }

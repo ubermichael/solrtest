@@ -12,7 +12,10 @@ namespace App\Repository;
 
 use App\Entity\Place;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
+use RuntimeException;
 
 /**
  * @method null|Place find($id, $lockMode = null, $lockVersion = null)
@@ -26,32 +29,58 @@ class PlaceRepository extends ServiceEntityRepository
         parent::__construct($registry, Place::class);
     }
 
-    // /**
-    //  * @return Place[] Returns an array of Place objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
+    /**
+     * @return Query
+     */
+    public function indexQuery() {
+        return $this->createQueryBuilder('place')
+            ->orderBy('place.id')
             ->getQuery()
-            ->getResult()
         ;
     }
-     */
 
-    /*
-    public function findOneBySomeField($value): ?Place
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
+    /**
+     * @param string $q
+     *
+     * @return Collection|Place[]
      */
+    public function typeaheadQuery($q) {
+        throw new RuntimeException('Not implemented yet.');
+        $qb = $this->createQueryBuilder('place');
+        $qb->andWhere('place.column LIKE :q');
+        $qb->orderBy('place.column', 'ASC');
+        $qb->setParameter('q', "{$q}%");
+
+        return $qb->getQuery()->execute();
+    }
+
+    /**
+     * @param string $q
+     *
+     * @return Query
+     */
+    public function searchNameCountry_nameQuery($q) {
+        $qb = $this->createQueryBuilder('place');
+        $qb->addSelect('MATCH (place.name, place.country_name) AGAINST(:q BOOLEAN) as HIDDEN score');
+        $qb->andHaving('score > 0');
+        $qb->orderBy('score', 'DESC');
+        $qb->setParameter('q', $q);
+
+        return $qb->getQuery();
+    }
+
+    /**
+     * @param string $q
+     *
+     * @return Query
+     */
+    public function searchSortable_nameQuery($q) {
+        $qb = $this->createQueryBuilder('place');
+        $qb->addSelect('MATCH (place.sortable_name) AGAINST(:q BOOLEAN) as HIDDEN score');
+        $qb->andHaving('score > 0');
+        $qb->orderBy('score', 'DESC');
+        $qb->setParameter('q', $q);
+
+        return $qb->getQuery();
+    }
 }
