@@ -564,9 +564,6 @@
     "twig/twig": {
         "version": "v3.3.0"
     },
-    "ubermichael/nines": {
-        "version": "4.x-dev"
-    },
     "webmozart/assert": {
         "version": "1.9.1"
     }

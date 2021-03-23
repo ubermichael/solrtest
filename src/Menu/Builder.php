@@ -1,13 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
-/*
- * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Menu;
 
 use Knp\Menu\FactoryInterface;
@@ -20,8 +12,7 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 /**
  * Class to build some menus for navigation.
  */
-class Builder implements ContainerAwareInterface
-{
+class Builder implements ContainerAwareInterface {
     use ContainerAwareTrait;
 
     /**
@@ -54,73 +45,81 @@ class Builder implements ContainerAwareInterface
     }
 
     /**
-     * Build a menu for navigation.
-     *
-     * @return ItemInterface
-     */
+    * Build a menu for entities.
+    *
+    * @return ItemInterface
+    */
     public function mainMenu(array $options) {
         $menu = $this->factory->createItem('root');
         $menu->setChildrenAttributes([
             'class' => 'nav navbar-nav',
         ]);
+        $menu->setAttribute('dropdown', true);
 
         $browse = $menu->addChild('Browse', [
             'uri' => '#',
-            'label' => 'Browse',
+            'label' => 'Media',
         ]);
         $browse->setAttribute('dropdown', true);
         $browse->setLinkAttribute('class', 'dropdown-toggle');
         $browse->setLinkAttribute('data-toggle', 'dropdown');
         $browse->setChildrenAttribute('class', 'dropdown-menu');
 
-//        $browse->addChild('Projects', ['route' => 'project_index']);
-
-        if ($this->hasRole('ROLE_CONTENT_ADMIN')) {
-            $divider = $browse->addChild('divider_content', [
+                    $browse->addChild('Book', [
+                'route' => 'book_index',
+            ]);
+                    $browse->addChild('Person', [
+                'route' => 'person_index',
+            ]);
+        
+        if($this->hasRole('ROLE_CONTENT_ADMIN')) {
+            $browse->addChild('content_divider', [
                 'label' => '',
             ]);
-            $divider->setAttributes([
+            $browse['content_divider']->setAttributes([
                 'role' => 'separator',
                 'class' => 'divider',
             ]);
-//            $browse->addChild('Time Cards', ['route' => 'time_card_index']);
+            $browse->addChild('Content Admin', [
+                'uri' => '#',
+            ]);
         }
 
-        if ($this->hasRole('ROLE_ADMIN')) {
-            $divider = $browse->addChild('divider_admin', [
+        if($this->hasRole('ROLE_ADMIN')) {
+            $browse->addChild('admin_divider', [
                 'label' => '',
             ]);
-            $divider->setAttributes([
+            $browse['admin_divider']->setAttributes([
                 'role' => 'separator',
                 'class' => 'divider',
             ]);
-            //            $browse->addChild('Formats', ['route' => 'format_index']);
+            $browse->addChild('Admin', [
+                'uri' => '#',
+            ]);
         }
 
         return $menu;
     }
 
     /**
-     * Build a menu for navigation.
-     *
-     * @return ItemInterface
-     */
+    * Build a menu for the footer.
+    *
+    * @return ItemInterface
+    */
     public function footerMenu(array $options) {
         $menu = $this->factory->createItem('root');
         $menu->setChildrenAttributes([
-            'class' => 'nav navbar-nav',
+            'class' => 'nav',
         ]);
-
         $menu->addChild('Home', [
             'route' => 'homepage',
         ]);
+
         $menu->addChild('Privacy', [
             'route' => 'privacy',
-        ]);
-        $menu->addChild('DHIL @ GitHub', [
-            'uri' => 'https://github.com/sfu-dhil',
         ]);
 
         return $menu;
     }
+
 }
