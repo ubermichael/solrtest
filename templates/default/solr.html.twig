@@ -37,45 +37,52 @@
         </div>
         <div class='row'>
             <div class='col-sm-3'>
-                {% if qr %}
+                {% if result %}
                     {% include 'solr/partial/facet.html.twig' with {
-                        'facet': qr.getFacet('type'),
+                        'facet': result.getFacet('type'),
                         'filter': 'type_s',
                         'header': 'Record Type'
                     } %}
 
                     {% include 'solr/partial/facet.html.twig' with {
-                        'facet': qr.getFacet('genre'),
+                        'facet': result.getFacet('genre'),
                         'filter': 'genres_ss',
                         'header': 'Genre'
                     } %}
                 {% endif %}
             </div>
             <div class='col-sm-9'>
-                {% if qr and qr.count > 0 %}
-                    {% set pageData = pagination.getPaginationData %}
-                    <h3>Results</h3>
-                    <p class="count">
-                        Found {{ pagination|length }} results. Showing page {{ pagination.getCurrentPageNumber }} of {{ pagination.getPageCount }}
-                        with results from {{ pageData.firstItemNumber }} to {{ pageData.lastItemNumber }} of {{ pagination.getTotalItemCount }} total.
-                    </p>
+                {% if result and result.count > 0 %}
+                    {% set pagination = result.paginator %}
+                    {% if pagination %}
+                        {% set pageData = pagination.getPaginationData %}
+                        <h3>Results</h3>
+                        <p class="count">
+                            Found {{ pagination.getTotalItemCount }} results. Showing
+                            page {{ pagination.getCurrentPageNumber }}
+                            of {{ pagination.getPageCount }}
+                            with results from {{ pageData.firstItemNumber }} to {{ pageData.lastItemNumber }}.
+                        </p>
+                    {% endif %}
 
                     <div class='list-group'>
-                        {% for i in 0..(qr.count-1) %}
-                            {% set document = qr.getDocument(i) %}
-                            {% set entity = qr.entity(i) %}
+                        {% for i in 0..(result.count-1) %}
+                            {% set document = result.getDocument(i) %}
+                            {% set entity = result.entity(i) %}
                             <a href='{{ entity_linker.link(entity) }}' class='list-group-item'> <b>{{ document.type_s }}
                                     : {{ entity }}</b><br />
-                                {% for h in qr.getHighlighting(i) %}
+                                {% for h in result.getHighlighting(i) %}
                                     {{ h|join("...")|raw }}
                                 {% endfor %}
                             </a>
                         {% endfor %}
                     </div>
 
-                    <div class="navigation">
-                        {{ knp_pagination_render(pagination) }}
-                    </div>
+                    {% if pagination %}
+                        <div class="navigation">
+                            {{ knp_pagination_render(pagination) }}
+                        </div>
+                    {% endif %}
                 {% endif %}
             </div>
         </div>

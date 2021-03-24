@@ -135,6 +135,9 @@
     "liip/test-fixtures-bundle": {
         "version": "1.11.2"
     },
+    "minimalcode/search": {
+        "version": "1.0.1"
+    },
     "monolog/monolog": {
         "version": "1.26.0"
     },

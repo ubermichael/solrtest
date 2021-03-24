@@ -13,11 +13,14 @@ namespace App\Controller;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use Nines\SolrBundle\Client\ClientFactory;
 use Nines\SolrBundle\Logging\SolrLogger;
 use Nines\SolrBundle\Query\QueryBuilder;
 use Nines\SolrBundle\Query\Result;
+use Nines\SolrBundle\Services\SolrManager;
 use Nines\UtilBundle\Controller\PaginatorTrait;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Solarium\Client;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -47,14 +50,12 @@ class DefaultController extends AbstractController implements PaginatorAwareInte
      * @Route("/solr", name="solr")
      * @Template
      */
-    public function solrAction(Request $request, SolrLogger $logger, QueryBuilder $qb, EntityManagerInterface $em, PaginatorInterface $paginator) {
+    public function solrAction(Request $request, SolrManager $solr, EntityManagerInterface $em) {
         $q = $request->query->get('q');
         $filters = $request->query->get('filter', []);
-        $page = (int) $request->query->get('page', 1);
-        $pageSize = (int) $this->getParameter('page_size');
-        $qr = null;
-        $paginated = null;
+        $result = null;
         if ($q) {
+            $qb = $solr->createQueryBuilder();
             $qb->setQueryString($q);
             $qb->setDefaultField('content_txt');
 
@@ -65,19 +66,15 @@ class DefaultController extends AbstractController implements PaginatorAwareInte
             $qb->addFacetField('type', 'type_s');
             $qb->addFacetField('genre', 'genres_ss');
             $query = $qb->getQuery();
-
-            $logger->startQuery($query);
-            $paginated = $paginator->paginate([$qb->getClient(), $query], $page, $pageSize);
-            $qr = new Result($paginated->getCustomParameter('result'), $em, $paginator);
-            $logger->stopQuery();
+            $result = $solr->execute($query, $this->paginator, [
+                'page' => (int) $request->query->get('page', 1),
+                'pageSize' => (int) $this->getParameter('page_size')
+            ]);
         }
 
         return [
             'q' => $q,
-            'qr' => $qr,
-            'start' => ($page - 1) * $pageSize + 1,
-            'end' => ($page) * $pageSize,
-            'pagination' => $paginated,
+            'result' => $result,
         ];
     }
 }
