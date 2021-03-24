@@ -14,7 +14,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Nines\UtilBundle\Entity\AbstractEntity;
-
+use Nines\SolrBundle\Annotation as Solr;
 /**
  * Place.
  *
@@ -23,6 +23,9 @@ use Nines\UtilBundle\Entity\AbstractEntity;
  *     @ORM\Index(columns={"sortable_name"}, flags={"fulltext"})
  * })
  * @ORM\Entity(repositoryClass="App\Repository\PlaceRepository")
+ * @Solr\Document(
+ *   @Solr\CopyFields(from={"name", "regionName", "description", "countryName"}, to="content", type="texts")
+ * )
  */
 class Place extends AbstractEntity
 {
@@ -32,11 +35,13 @@ class Place extends AbstractEntity
 
     /**
      * @ORM\Column(type="string", length=250, nullable=false)
+     * @Solr\Field(type="text")
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=250, nullable=false)
+     * @Solr\Field(type="text")
      */
     private $sortableName;
 
@@ -50,11 +55,13 @@ class Place extends AbstractEntity
      * A province, state, territory or other sub-national entity.
      *
      * @ORM\Column(type="string", length=250, nullable=true)
+     * @Solr\Field(type="text")
      */
     private $regionName;
 
     /**
      * @ORM\Column(type="string", length=250, nullable=true)
+     * @Solr\Field(type="text")
      */
     private $countryName;
 
@@ -73,6 +80,7 @@ class Place extends AbstractEntity
      *
      * @var string
      * @ORM\Column(type="text", nullable=true)
+     * @Solr\Field(type="text")
      */
     private $description;
 

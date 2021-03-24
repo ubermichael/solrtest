@@ -19,7 +19,9 @@ use Nines\SolrBundle\Annotation as Solr;
  * @ORM\Table(name="periodical")
  * @ORM\Entity(repositoryClass="App\Repository\PeriodicalRepository")
  *
- * @Solr\Document
+ * @Solr\Document(
+ *   @Solr\CopyFields(from={"title", "continuedFrom", "continuedBy", "description", "dateYear", "location", "genres", "contributions", "publishers"}, to="content", type="texts")
+ * )
  */
 class Periodical extends Publication
 {

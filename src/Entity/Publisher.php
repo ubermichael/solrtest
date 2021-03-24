@@ -24,7 +24,9 @@ use Nines\UtilBundle\Entity\AbstractEntity;
  * })
  * @ORM\Entity(repositoryClass="App\Repository\PublisherRepository")
  *
- * @Solr\Document
+ * @Solr\Document(
+ *   @Solr\CopyFields(from={"name", "notes", "places"}, to="content", type="texts")
+ * )
  */
 class Publisher extends AbstractEntity
 {

@@ -19,7 +19,9 @@ use Nines\SolrBundle\Annotation as Solr;
  * @ORM\Table(name="collection")
  * @ORM\Entity(repositoryClass="App\Repository\CompilationRepository")
  *
- * @Solr\Document
+ * @Solr\Document(
+ *   @Solr\CopyFields(from={"title", "description", "dateYear", "location", "genres", "contributions", "publishers"}, to="content", type="texts")
+ * )
  */
 class Compilation extends Publication
 {
