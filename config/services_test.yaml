@@ -6,13 +6,13 @@ services:
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
         public: true
 
-        test.App\Repository\AliasRepository: '@App\Repository\AliasRepository'
-        test.App\Repository\BookRepository: '@App\Repository\BookRepository'
-        test.App\Repository\CompilationRepository: '@App\Repository\CompilationRepository'
-        test.App\Repository\ContributionRepository: '@App\Repository\ContributionRepository'
-        test.App\Repository\DateYearRepository: '@App\Repository\DateYearRepository'
-        test.App\Repository\GenreRepository: '@App\Repository\GenreRepository'
-        test.App\Repository\PeriodicalRepository: '@App\Repository\PeriodicalRepository'
-        test.App\Repository\PersonRepository: '@App\Repository\PersonRepository'
-        test.App\Repository\PlaceRepository: '@App\Repository\PlaceRepository'
-        test.App\Repository\PublisherRepository: '@App\Repository\PublisherRepository'
+    test.App\Repository\AliasRepository: '@App\Repository\AliasRepository'
+    test.App\Repository\BookRepository: '@App\Repository\BookRepository'
+    test.App\Repository\CompilationRepository: '@App\Repository\CompilationRepository'
+    test.App\Repository\ContributionRepository: '@App\Repository\ContributionRepository'
+    test.App\Repository\DateYearRepository: '@App\Repository\DateYearRepository'
+    test.App\Repository\GenreRepository: '@App\Repository\GenreRepository'
+    test.App\Repository\PeriodicalRepository: '@App\Repository\PeriodicalRepository'
+    test.App\Repository\PersonRepository: '@App\Repository\PersonRepository'
+    test.App\Repository\PlaceRepository: '@App\Repository\PlaceRepository'
+    test.App\Repository\PublisherRepository: '@App\Repository\PublisherRepository'
