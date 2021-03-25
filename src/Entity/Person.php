@@ -28,7 +28,7 @@ use Nines\UtilBundle\Entity\AbstractEntity;
  * @ORM\Entity(repositoryClass="App\Repository\PersonRepository")
  *
  * @Solr\Document(
- *   @Solr\CopyFields(from={"fullName", "description", "birthPlace", "residences", "aliases", "deathPlace"}, to="content", type="texts")
+ *     @Solr\CopyField(from={"fullName", "description", "birthPlace", "residences", "aliases", "deathPlace"}, to="content", type="texts")
  * )
  */
 class Person extends AbstractEntity implements LinkableInterface

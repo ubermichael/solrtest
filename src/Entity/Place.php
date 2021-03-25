@@ -13,8 +13,9 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Nines\UtilBundle\Entity\AbstractEntity;
 use Nines\SolrBundle\Annotation as Solr;
+use Nines\UtilBundle\Entity\AbstractEntity;
+
 /**
  * Place.
  *
@@ -24,7 +25,8 @@ use Nines\SolrBundle\Annotation as Solr;
  * })
  * @ORM\Entity(repositoryClass="App\Repository\PlaceRepository")
  * @Solr\Document(
- *   @Solr\CopyFields(from={"name", "regionName", "description", "countryName"}, to="content", type="texts")
+ *     copyField=@Solr\CopyField(from={"name", "regionName", "description", "countryName"}, to="content", type="texts"),
+ *     computedFields=@Solr\ComputedField(name="location_p", type="location", getter="getCoordinates")
  * )
  */
 class Place extends AbstractEntity
@@ -564,5 +566,13 @@ class Place extends AbstractEntity
         }
 
         return $this;
+    }
+
+    public function getCoordinates() : ?string {
+        if ($this->latitude && $this->longitude) {
+            return $this->latitude . ',' . $this->longitude;
+        }
+
+        return null;
     }
 }
