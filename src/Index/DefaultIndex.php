@@ -8,11 +8,11 @@ declare(strict_types=1);
  * with this source code in the file LICENSE.
  */
 
-namespace App\SolrRepository;
+namespace App\Index;
 
-use Nines\SolrBundle\Repository\SolrRepository;
+use Nines\SolrBundle\Index\AbstractIndex;
 
-class DefaultRepository extends SolrRepository
+class DefaultIndex extends AbstractIndex
 {
     public function search($q, $filters) {
         $qb = $this->createQueryBuilder();

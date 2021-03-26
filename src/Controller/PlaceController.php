@@ -12,8 +12,10 @@ namespace App\Controller;
 
 use App\Entity\Place;
 use App\Form\PlaceType;
+use App\Index\PlaceIndex;
 use App\Repository\PlaceRepository;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
+use Nines\SolrBundle\Services\SolrManager;
 use Nines\UtilBundle\Controller\PaginatorTrait;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -133,9 +135,12 @@ class PlaceController extends AbstractController implements PaginatorAwareInterf
      *
      * @return array
      */
-    public function show(Place $place) {
+    public function show(Place $place, PlaceIndex $index, SolrManager $manager) {
+        $query = $index->nearBy($place, 50);
+        $nearby = $manager->execute($query);
         return [
             'place' => $place,
+            'nearby' => $nearby,
         ];
     }
 

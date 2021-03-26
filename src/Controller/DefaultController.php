@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\SolrRepository\DefaultRepository;
+use App\Index\DefaultIndex;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Nines\SolrBundle\Services\SolrManager;
@@ -45,7 +45,7 @@ class DefaultController extends AbstractController implements PaginatorAwareInte
      * @Route("/solr", name="solr")
      * @Template
      */
-    public function solrAction(Request $request, DefaultRepository $repo, SolrManager $solr) {
+    public function solrAction(Request $request, DefaultIndex $repo, SolrManager $solr) {
         $q = $request->query->get('q');
         $filters = $request->query->get('filter', []);
         $result = null;

@@ -56,7 +56,7 @@
         </tr>
 
         <tr>
-            <th>Person</th>
+            <th>People Born</th>
             <td>
                 {% if place.peopleBorn|length > 0 %}
                     <ul>
@@ -72,7 +72,7 @@
             </td>
         </tr>
         <tr>
-            <th>Person</th>
+            <th>People Died</th>
             <td>
                 {% if place.peopleDied|length > 0 %}
                     <ul>
@@ -88,7 +88,7 @@
             </td>
         </tr>
         <tr>
-            <th>Person</th>
+            <th>Residents</th>
             <td>
                 {% if place.residents|length > 0 %}
                     <ul>
@@ -110,9 +110,7 @@
                     <ul>
                         {% for publication in place.publications %}
                             <li>
-                                <a href='{{ path("publication_show", {"id":publication.id }) }}'>
-                                    {{ publication }}
-                                </a>
+                                {% include 'publication/partial/link.html.twig' with {'publication': publication} %}
                             </li>
                         {% endfor %}
                     </ul>
@@ -133,6 +131,17 @@
                         {% endfor %}
                     </ul>
                 {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>Nearby Places</th>
+            {{ dump(nearby.getDocument(2)) }}
+            <td>
+                {% for i in 0..(nearby.count-1) %}
+                {% set document = nearby.getDocument(i) %}
+                {% set entity = nearby.entity(i) %}
+                {{ entity }} {{ document.distance|number_format(1) }} km<br/>
+                {% endfor %}
             </td>
         </tr>
         <tr>
