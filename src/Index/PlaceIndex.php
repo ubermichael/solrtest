@@ -1,16 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
 
 namespace App\Index;
-
 
 use App\Entity\Place;
 use Nines\SolrBundle\Index\AbstractIndex;
 use Solarium\Core\Query\Helper;
-use Solarium\QueryType\Select\Query\Query;
 
-class PlaceIndex extends AbstractIndex {
-
+class PlaceIndex extends AbstractIndex
+{
     public function nearBy(Place $place, $distance) {
         $helper = new Helper();
         $geofilter = $helper->geofilt('location_p', $place->getLatitude(), $place->getLongitude(), $distance);
@@ -20,8 +25,7 @@ class PlaceIndex extends AbstractIndex {
         $qb->addFilter('distance', $geofilter);
         $qb->addField("distance:{$geodist}");
         $qb->setSorting([[$geodist, 'asc']]);
-        $query = $qb->getQuery();
-        return $query;
-    }
 
+        return $qb->getQuery();
+    }
 }

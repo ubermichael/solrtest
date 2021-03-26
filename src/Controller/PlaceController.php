@@ -138,6 +138,7 @@ class PlaceController extends AbstractController implements PaginatorAwareInterf
     public function show(Place $place, PlaceIndex $index, SolrManager $manager) {
         $query = $index->nearBy($place, 50);
         $nearby = $manager->execute($query);
+
         return [
             'place' => $place,
             'nearby' => $nearby,
