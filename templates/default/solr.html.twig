@@ -40,13 +40,13 @@
                 {% if result %}
                     {% include 'solr/partial/facet.html.twig' with {
                         'facet': result.getFacet('type'),
-                        'filter': 'type_s',
+                        'filter': 'type',
                         'header': 'Record Type'
                     } %}
 
                     {% include 'solr/partial/facet.html.twig' with {
-                        'facet': result.getFacet('genre'),
-                        'filter': 'genres_ss',
+                        'facet': result.getFacet('genres'),
+                        'filter': 'genres',
                         'header': 'Genre'
                     } %}
                 {% endif %}

@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\SolrRepository\DefaultRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Nines\SolrBundle\Services\SolrManager;
@@ -44,22 +45,12 @@ class DefaultController extends AbstractController implements PaginatorAwareInte
      * @Route("/solr", name="solr")
      * @Template
      */
-    public function solrAction(Request $request, SolrManager $solr, EntityManagerInterface $em) {
+    public function solrAction(Request $request, DefaultRepository $repo, SolrManager $solr) {
         $q = $request->query->get('q');
         $filters = $request->query->get('filter', []);
         $result = null;
         if ($q) {
-            $qb = $solr->createQueryBuilder();
-            $qb->setQueryString($q);
-            $qb->setDefaultField('content_txt');
-
-            foreach ($filters as $key => $values) {
-                $qb->addFilter($key, $values);
-            }
-            $qb->setHighlightFields('content_txt');
-            $qb->addFacetField('type', 'type_s');
-            $qb->addFacetField('genre', 'genres_ss');
-            $query = $qb->getQuery();
+            $query = $repo->search($q, $filters);
             $result = $solr->execute($query, $this->paginator, [
                 'page' => (int) $request->query->get('page', 1),
                 'pageSize' => (int) $this->getParameter('page_size'),
