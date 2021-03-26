@@ -1,15 +1,15 @@
-    {% extends 'popup.html.twig' %}
+{% extends 'popup.html.twig' %}
 
     {% block title %}New Date Year {% endblock %}
 
     {% block body %}
-    <h1>New Date Year</h1>
+        <h1>New Date Year</h1>
 
-    {% embed 'date_year/partial/form.html.twig' %}
-    {% endembed %}
+        {% embed 'date_year/partial/form.html.twig' %}
+        {% endembed %}
 
     {% endblock %}
 
     {% block javascripts %}
-    {% include '@NinesEditor/editor/widget.html.twig' %}
+        {% include '@NinesEditor/editor/widget.html.twig' %}
     {% endblock %}

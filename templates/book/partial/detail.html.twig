@@ -1,109 +1,108 @@
-
 <table class='table table-bordered table-condensed table-hover table-striped'>
     <tbody>
         <tr>
             <th>Title</th>
             <td>
-                                                            {{ book.title|raw }}
-                                  </td>
-          </tr>
-          <tr>
+                {{ book.title|raw }}
+            </td>
+        </tr>
+        <tr>
             <th>Sortable Title</th>
             <td>
-                                                            {{ book.sortableTitle|raw }}
-                                  </td>
-          </tr>
-          <tr>
+                {{ book.sortableTitle|raw }}
+            </td>
+        </tr>
+        <tr>
             <th>Old Links</th>
             <td>
-                                                            {% if book.oldLinks %}{{ book.oldLinks|join(', ') }}{% endif %}
-                                  </td>
-          </tr>
-          <tr>
+                {% if book.oldLinks %}{{ book.oldLinks|join(', ') }}{% endif %}
+            </td>
+        </tr>
+        <tr>
             <th>Description</th>
             <td>
-                                                            {{ book.description|raw }}
-                                  </td>
-          </tr>
-          <tr>
+                {{ book.description|raw }}
+            </td>
+        </tr>
+        <tr>
             <th>Notes</th>
             <td>
-                                                            {{ book.notes|raw }}
-                                  </td>
-          </tr>
-          
-                                                                  <tr>
-                <th>DateYear</th>
-                <td>
+                {{ book.notes|raw }}
+            </td>
+        </tr>
+
+        <tr>
+            <th>DateYear</th>
+            <td>
                 {% if book.dateYear %}
-                  <a href='{{ path("date_year_show", {"id": book.dateYear.id}) }}'>{{ book.dateYear }}</a>
-                  {% endif %}
-                </td>
-              </tr>
-                                                                  <tr>
-                <th>Place</th>
-                <td>
+                    <a href='{{ path("date_year_show", {"id": book.dateYear.id}) }}'>{{ book.dateYear }}</a>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>Place</th>
+            <td>
                 {% if book.location %}
-                  <a href='{{ path("place_show", {"id": book.location.id}) }}'>{{ book.location }}</a>
-                  {% endif %}
-                </td>
-              </tr>
-                                                                  <tr>
-                <th>Genre</th>
-                <td>
-                  {% if book.genres|length > 0 %}
-                  <ul>
-                      {% for genre in book.genres %} 
-                      <li>
-                          <a href='{{ path("genre_show", {"id":genre.id }) }}'>
-                              {{ genre }}
-                          </a>
-                      </li>
-                      {% endfor %}
-                  </ul>
-                  {% endif %}
-                </td>
-              </tr>
-                                                                  <tr>
-                <th>Contribution</th>
-                <td>
-                  {% if book.contributions|length > 0 %}
-                  <ul>
-                      {% for contribution in book.contributions %} 
-                      <li>
-                          <a href='{{ path("contribution_show", {"id":contribution.id }) }}'>
-                              {{ contribution }}
-                          </a>
-                      </li>
-                      {% endfor %}
-                  </ul>
-                  {% endif %}
-                </td>
-              </tr>
-                                                                  <tr>
-                <th>Publisher</th>
-                <td>
-                  {% if book.publishers|length > 0 %}
-                  <ul>
-                      {% for publisher in book.publishers %} 
-                      <li>
-                          <a href='{{ path("publisher_show", {"id":publisher.id }) }}'>
-                              {{ publisher }}
-                          </a>
-                      </li>
-                      {% endfor %}
-                  </ul>
-                  {% endif %}
-                </td>
-              </tr>
-          <tr>
-        <th>Created</th>
-        <td>{{ book.created|date }}</td>
-    </tr>
-    <tr>
-        <th>Updated</th>
-        <td>{{ book.updated|date }}</td>
-    </tr>
+                    <a href='{{ path("place_show", {"id": book.location.id}) }}'>{{ book.location }}</a>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>Genre</th>
+            <td>
+                {% if book.genres|length > 0 %}
+                    <ul>
+                        {% for genre in book.genres %}
+                            <li>
+                                <a href='{{ path("genre_show", {"id":genre.id }) }}'>
+                                    {{ genre }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>Contribution</th>
+            <td>
+                {% if book.contributions|length > 0 %}
+                    <ul>
+                        {% for contribution in book.contributions %}
+                            <li>
+                                <a href='{{ path("contribution_show", {"id":contribution.id }) }}'>
+                                    {{ contribution }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>Publisher</th>
+            <td>
+                {% if book.publishers|length > 0 %}
+                    <ul>
+                        {% for publisher in book.publishers %}
+                            <li>
+                                <a href='{{ path("publisher_show", {"id":publisher.id }) }}'>
+                                    {{ publisher }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>Created</th>
+            <td>{{ book.created|date }}</td>
+        </tr>
+        <tr>
+            <th>Updated</th>
+            <td>{{ book.updated|date }}</td>
+        </tr>
     </tbody>
 </table>
 

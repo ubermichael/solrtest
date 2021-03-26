@@ -1,42 +1,42 @@
-  <table class="table table-bordered table-condensed table-hover table-striped">
-      <thead>
-          <tr>
-              <th>ID</th>                                       <th>Title</th>
-                                                         <th>Sortable Title</th>
-                                                         <th>Old Links</th>
-                                                         <th>Description</th>
-                                                         <th>Notes</th>
-                  
-          </tr>
-      </thead>
-      <tbody>
-      {% for book in books %}
-          <tr>
-              <td>
-                  <a href="{{ path('book_show', { 'id': book.id }) }}">
-                      {{ book.id }}
-                  </a>
-              </td>
-              <td>
-                  {{ book.title|raw }}
-              </td>
-          
-              <td>
-                  {{ book.sortableTitle|raw }}
-              </td>
-          
-              <td>{% if book.oldLinks %}{{ book.oldLinks|join(', ') }}{% endif %}</td>
-          
-              <td>
-                  {{ book.description|raw }}
-              </td>
-          
-              <td>
-                  {{ book.notes|raw }}
-              </td>
-          
-          </tr>
-      {% endfor %}
-      </tbody>
-  </table>
-  
+<table class="table table-bordered table-condensed table-hover table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Sortable Title</th>
+            <th>Old Links</th>
+            <th>Description</th>
+            <th>Notes</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        {% for book in books %}
+            <tr>
+                <td>
+                    <a href="{{ path('book_show', { 'id': book.id }) }}">
+                        {{ book.id }}
+                    </a>
+                </td>
+                <td>
+                    {{ book.title|raw }}
+                </td>
+
+                <td>
+                    {{ book.sortableTitle|raw }}
+                </td>
+
+                <td>{% if book.oldLinks %}{{ book.oldLinks|join(', ') }}{% endif %}</td>
+
+                <td>
+                    {{ book.description|raw }}
+                </td>
+
+                <td>
+                    {{ book.notes|raw }}
+                </td>
+
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

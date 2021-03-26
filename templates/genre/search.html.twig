@@ -2,14 +2,14 @@
 
 {% block title %}Genre Search{% endblock %}
 
- {% block pageheader %} 
-    <h1>Genre Search</h1>
-    {% if genres|length %}
-    <p class="count">
-        Displaying {{ genres|length }} genres of {{ genres.getTotalItemCount }} total.
-    </p>
-	{% endif %}
- {% endblock %} 
+ {% block pageheader %}
+     <h1>Genre Search</h1>
+     {% if genres|length %}
+         <p class="count">
+             Displaying {{ genres|length }} genres of {{ genres.getTotalItemCount }} total.
+         </p>
+     {% endif %}
+ {% endblock %}
 
 {% block body %}
 
@@ -30,7 +30,7 @@
                     </div>
                 </div>
             </div>
-            <p>	Full text searching options, if available:</p>
+            <p> Full text searching options, if available:</p>
             <ul>
                 <li><code>shakespeare</code> - shakespeare should be present, but might not be</li>
                 <li><code>shakes*</code> - words starting with shakes should be present</li>
@@ -42,15 +42,15 @@
         </fieldset>
     </form>
 
-	{% if genres|length %}
+    {% if genres|length %}
 
-  {% embed 'genre/partial/table.html.twig' %}
-  {% endembed %}
+        {% embed 'genre/partial/table.html.twig' %}
+        {% endembed %}
 
-    <div class="navigation">
-        {{ knp_pagination_render(genres) }}
-    </div>
-	{% endif %}
+        <div class="navigation">
+            {{ knp_pagination_render(genres) }}
+        </div>
+    {% endif %}
 
 {% endblock %}
 

@@ -1,109 +1,108 @@
-
 <table class='table table-bordered table-condensed table-hover table-striped'>
     <tbody>
         <tr>
             <th>Title</th>
             <td>
-                                                            {{ compilation.title|raw }}
-                                  </td>
-          </tr>
-          <tr>
+                {{ compilation.title|raw }}
+            </td>
+        </tr>
+        <tr>
             <th>Sortable Title</th>
             <td>
-                                                            {{ compilation.sortableTitle|raw }}
-                                  </td>
-          </tr>
-          <tr>
+                {{ compilation.sortableTitle|raw }}
+            </td>
+        </tr>
+        <tr>
             <th>Old Links</th>
             <td>
-                                                            {% if compilation.oldLinks %}{{ compilation.oldLinks|join(', ') }}{% endif %}
-                                  </td>
-          </tr>
-          <tr>
+                {% if compilation.oldLinks %}{{ compilation.oldLinks|join(', ') }}{% endif %}
+            </td>
+        </tr>
+        <tr>
             <th>Description</th>
             <td>
-                                                            {{ compilation.description|raw }}
-                                  </td>
-          </tr>
-          <tr>
+                {{ compilation.description|raw }}
+            </td>
+        </tr>
+        <tr>
             <th>Notes</th>
             <td>
-                                                            {{ compilation.notes|raw }}
-                                  </td>
-          </tr>
-          
-                                                                  <tr>
-                <th>DateYear</th>
-                <td>
+                {{ compilation.notes|raw }}
+            </td>
+        </tr>
+
+        <tr>
+            <th>DateYear</th>
+            <td>
                 {% if compilation.dateYear %}
-                  <a href='{{ path("date_year_show", {"id": compilation.dateYear.id}) }}'>{{ compilation.dateYear }}</a>
-                  {% endif %}
-                </td>
-              </tr>
-                                                                  <tr>
-                <th>Place</th>
-                <td>
+                    <a href='{{ path("date_year_show", {"id": compilation.dateYear.id}) }}'>{{ compilation.dateYear }}</a>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>Place</th>
+            <td>
                 {% if compilation.location %}
-                  <a href='{{ path("place_show", {"id": compilation.location.id}) }}'>{{ compilation.location }}</a>
-                  {% endif %}
-                </td>
-              </tr>
-                                                                  <tr>
-                <th>Genre</th>
-                <td>
-                  {% if compilation.genres|length > 0 %}
-                  <ul>
-                      {% for genre in compilation.genres %} 
-                      <li>
-                          <a href='{{ path("genre_show", {"id":genre.id }) }}'>
-                              {{ genre }}
-                          </a>
-                      </li>
-                      {% endfor %}
-                  </ul>
-                  {% endif %}
-                </td>
-              </tr>
-                                                                  <tr>
-                <th>Contribution</th>
-                <td>
-                  {% if compilation.contributions|length > 0 %}
-                  <ul>
-                      {% for contribution in compilation.contributions %} 
-                      <li>
-                          <a href='{{ path("contribution_show", {"id":contribution.id }) }}'>
-                              {{ contribution }}
-                          </a>
-                      </li>
-                      {% endfor %}
-                  </ul>
-                  {% endif %}
-                </td>
-              </tr>
-                                                                  <tr>
-                <th>Publisher</th>
-                <td>
-                  {% if compilation.publishers|length > 0 %}
-                  <ul>
-                      {% for publisher in compilation.publishers %} 
-                      <li>
-                          <a href='{{ path("publisher_show", {"id":publisher.id }) }}'>
-                              {{ publisher }}
-                          </a>
-                      </li>
-                      {% endfor %}
-                  </ul>
-                  {% endif %}
-                </td>
-              </tr>
-          <tr>
-        <th>Created</th>
-        <td>{{ compilation.created|date }}</td>
-    </tr>
-    <tr>
-        <th>Updated</th>
-        <td>{{ compilation.updated|date }}</td>
-    </tr>
+                    <a href='{{ path("place_show", {"id": compilation.location.id}) }}'>{{ compilation.location }}</a>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>Genre</th>
+            <td>
+                {% if compilation.genres|length > 0 %}
+                    <ul>
+                        {% for genre in compilation.genres %}
+                            <li>
+                                <a href='{{ path("genre_show", {"id":genre.id }) }}'>
+                                    {{ genre }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>Contribution</th>
+            <td>
+                {% if compilation.contributions|length > 0 %}
+                    <ul>
+                        {% for contribution in compilation.contributions %}
+                            <li>
+                                <a href='{{ path("contribution_show", {"id":contribution.id }) }}'>
+                                    {{ contribution }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>Publisher</th>
+            <td>
+                {% if compilation.publishers|length > 0 %}
+                    <ul>
+                        {% for publisher in compilation.publishers %}
+                            <li>
+                                <a href='{{ path("publisher_show", {"id":publisher.id }) }}'>
+                                    {{ publisher }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>Created</th>
+            <td>{{ compilation.created|date }}</td>
+        </tr>
+        <tr>
+            <th>Updated</th>
+            <td>{{ compilation.updated|date }}</td>
+        </tr>
     </tbody>
 </table>
 

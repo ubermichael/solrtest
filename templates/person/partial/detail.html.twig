@@ -1,137 +1,136 @@
-
 <table class='table table-bordered table-condensed table-hover table-striped'>
     <tbody>
         <tr>
             <th>Full Name</th>
             <td>
-                                                            {{ person.fullName }}
-                                  </td>
-          </tr>
-          <tr>
+                {{ person.fullName }}
+            </td>
+        </tr>
+        <tr>
             <th>Sortable Name</th>
             <td>
-                                                            {{ person.sortableName }}
-                                  </td>
-          </tr>
-          <tr>
+                {{ person.sortableName }}
+            </td>
+        </tr>
+        <tr>
             <th>Gender</th>
             <td>
-                                                            {{ person.gender }}
-                                  </td>
-          </tr>
-          <tr>
+                {{ person.gender }}
+            </td>
+        </tr>
+        <tr>
             <th>Canadian</th>
             <td>
-                                                            {% if person.canadian %}Yes{% else %}No{% endif %}
-                                  </td>
-          </tr>
-          <tr>
+                {% if person.canadian %}Yes{% else %}No{% endif %}
+            </td>
+        </tr>
+        <tr>
             <th>Description</th>
             <td>
-                                                            {{ person.description|raw }}
-                                  </td>
-          </tr>
-          <tr>
+                {{ person.description|raw }}
+            </td>
+        </tr>
+        <tr>
             <th>Notes</th>
             <td>
-                                                            {{ person.notes|raw }}
-                                  </td>
-          </tr>
-          <tr>
+                {{ person.notes|raw }}
+            </td>
+        </tr>
+        <tr>
             <th>Url Links</th>
             <td>
-                                                            {% if person.urlLinks %}{{ person.urlLinks|join(', ') }}{% endif %}
-                                  </td>
-          </tr>
-          
-                                                                  <tr>
-                <th>DateYear</th>
-                <td>
+                {% if person.urlLinks %}{{ person.urlLinks|join(', ') }}{% endif %}
+            </td>
+        </tr>
+
+        <tr>
+            <th>DateYear</th>
+            <td>
                 {% if person.birthDate %}
-                  <a href='{{ path("date_year_show", {"id": person.birthDate.id}) }}'>{{ person.birthDate }}</a>
-                  {% endif %}
-                </td>
-              </tr>
-                                                                  <tr>
-                <th>Place</th>
-                <td>
+                    <a href='{{ path("date_year_show", {"id": person.birthDate.id}) }}'>{{ person.birthDate }}</a>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>Place</th>
+            <td>
                 {% if person.birthPlace %}
-                  <a href='{{ path("place_show", {"id": person.birthPlace.id}) }}'>{{ person.birthPlace }}</a>
-                  {% endif %}
-                </td>
-              </tr>
-                                                                  <tr>
-                <th>DateYear</th>
-                <td>
+                    <a href='{{ path("place_show", {"id": person.birthPlace.id}) }}'>{{ person.birthPlace }}</a>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>DateYear</th>
+            <td>
                 {% if person.deathDate %}
-                  <a href='{{ path("date_year_show", {"id": person.deathDate.id}) }}'>{{ person.deathDate }}</a>
-                  {% endif %}
-                </td>
-              </tr>
-                                                                  <tr>
-                <th>Place</th>
-                <td>
+                    <a href='{{ path("date_year_show", {"id": person.deathDate.id}) }}'>{{ person.deathDate }}</a>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>Place</th>
+            <td>
                 {% if person.deathPlace %}
-                  <a href='{{ path("place_show", {"id": person.deathPlace.id}) }}'>{{ person.deathPlace }}</a>
-                  {% endif %}
-                </td>
-              </tr>
-                                                                  <tr>
-                <th>Place</th>
-                <td>
-                  {% if person.residences|length > 0 %}
-                  <ul>
-                      {% for place in person.residences %} 
-                      <li>
-                          <a href='{{ path("place_show", {"id":place.id }) }}'>
-                              {{ place }}
-                          </a>
-                      </li>
-                      {% endfor %}
-                  </ul>
-                  {% endif %}
-                </td>
-              </tr>
-                                                                  <tr>
-                <th>Alias</th>
-                <td>
-                  {% if person.aliases|length > 0 %}
-                  <ul>
-                      {% for alias in person.aliases %} 
-                      <li>
-                          <a href='{{ path("alias_show", {"id":alias.id }) }}'>
-                              {{ alias }}
-                          </a>
-                      </li>
-                      {% endfor %}
-                  </ul>
-                  {% endif %}
-                </td>
-              </tr>
-                                                                  <tr>
-                <th>Contribution</th>
-                <td>
-                  {% if person.contributions|length > 0 %}
-                  <ul>
-                      {% for contribution in person.contributions %} 
-                      <li>
-                          <a href='{{ path("contribution_show", {"id":contribution.id }) }}'>
-                              {{ contribution }}
-                          </a>
-                      </li>
-                      {% endfor %}
-                  </ul>
-                  {% endif %}
-                </td>
-              </tr>
-          <tr>
-        <th>Created</th>
-        <td>{{ person.created|date }}</td>
-    </tr>
-    <tr>
-        <th>Updated</th>
-        <td>{{ person.updated|date }}</td>
-    </tr>
+                    <a href='{{ path("place_show", {"id": person.deathPlace.id}) }}'>{{ person.deathPlace }}</a>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>Place</th>
+            <td>
+                {% if person.residences|length > 0 %}
+                    <ul>
+                        {% for place in person.residences %}
+                            <li>
+                                <a href='{{ path("place_show", {"id":place.id }) }}'>
+                                    {{ place }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>Alias</th>
+            <td>
+                {% if person.aliases|length > 0 %}
+                    <ul>
+                        {% for alias in person.aliases %}
+                            <li>
+                                <a href='{{ path("alias_show", {"id":alias.id }) }}'>
+                                    {{ alias }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>Contribution</th>
+            <td>
+                {% if person.contributions|length > 0 %}
+                    <ul>
+                        {% for contribution in person.contributions %}
+                            <li>
+                                <a href='{{ path("contribution_show", {"id":contribution.id }) }}'>
+                                    {{ contribution }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>Created</th>
+            <td>{{ person.created|date }}</td>
+        </tr>
+        <tr>
+            <th>Updated</th>
+            <td>{{ person.updated|date }}</td>
+        </tr>
     </tbody>
 </table>
 

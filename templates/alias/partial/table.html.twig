@@ -1,49 +1,47 @@
-  <table class="table table-bordered table-condensed table-hover table-striped">
-      <thead>
-          <tr>
-              <th>ID</th>                                       <th>Name</th>
-                                                         <th>Sortable Name</th>
-                                                         <th>Maiden</th>
-                                                         <th>Married</th>
-                                                         <th>Description</th>
-                                                         <th>Notes</th>
-                  
-          </tr>
-      </thead>
-      <tbody>
-      {% for alias in aliases %}
-          <tr>
-              <td>
-                  <a href="{{ path('alias_show', { 'id': alias.id }) }}">
-                      {{ alias.id }}
-                  </a>
-              </td>
-              <td>
-                  {{ alias.name }}
-              </td>
-          
-              <td>
-                  {{ alias.sortableName }}
-              </td>
-          
-              <td>{% if alias.maiden %}Yes{% else %}No{% endif %}</td>
+<table class="table table-bordered table-condensed table-hover table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Sortable Name</th>
+            <th>Maiden</th>
+            <th>Married</th>
+            <th>Description</th>
+            <th>Notes</th>
 
-          
-          
-              <td>{% if alias.married %}Yes{% else %}No{% endif %}</td>
+        </tr>
+    </thead>
+    <tbody>
+        {% for alias in aliases %}
+            <tr>
+                <td>
+                    <a href="{{ path('alias_show', { 'id': alias.id }) }}">
+                        {{ alias.id }}
+                    </a>
+                </td>
+                <td>
+                    {{ alias.name }}
+                </td>
 
-          
-          
-              <td>
-                  {{ alias.description|raw }}
-              </td>
-          
-              <td>
-                  {{ alias.notes|raw }}
-              </td>
-          
-          </tr>
-      {% endfor %}
-      </tbody>
-  </table>
-  
+                <td>
+                    {{ alias.sortableName }}
+                </td>
+
+                <td>{% if alias.maiden %}Yes{% else %}No{% endif %}</td>
+
+
+                <td>{% if alias.married %}Yes{% else %}No{% endif %}</td>
+
+
+                <td>
+                    {{ alias.description|raw }}
+                </td>
+
+                <td>
+                    {{ alias.notes|raw }}
+                </td>
+
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

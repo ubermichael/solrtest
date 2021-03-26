@@ -9,8 +9,8 @@
         {% set checked %}
             {% apply spaceless %}
                 {% if   ('filter_range' in queryParams|keys) and
-                        (filter in queryParams['filter_range']|keys) and
-                        (range in queryParams['filter_range'][filter]) %}
+                    (filter in queryParams['filter_range']|keys) and
+                    (range in queryParams['filter_range'][filter]) %}
                     checked='checked'
                 {% endif %}
             {% endapply %}

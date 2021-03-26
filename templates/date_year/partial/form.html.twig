@@ -5,13 +5,9 @@
     <div class="col-sm-10">
         <input type="submit" value="Save" class="btn btn-primary" />
         {% if date_year.id is null %}
-        <a href="{{ path('date_year_index') }}" class="btn btn-warning">
-            Cancel
-        </a>
+            <a href="{{ path('date_year_index') }}" class="btn btn-warning"> Cancel </a>
         {% else %}
-            <a href="{{ path('date_year_show', { 'id': date_year.id }) }}" class="btn btn-warning">
-                Cancel
-            </a>
+            <a href="{{ path('date_year_show', { 'id': date_year.id }) }}" class="btn btn-warning"> Cancel </a>
         {% endif %}
     </div>
 </div>

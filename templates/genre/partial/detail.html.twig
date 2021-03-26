@@ -1,49 +1,48 @@
-
 <table class='table table-bordered table-condensed table-hover table-striped'>
     <tbody>
         <tr>
             <th>Name</th>
             <td>
-                                                            {{ genre.name }}
-                                  </td>
-          </tr>
-          <tr>
+                {{ genre.name }}
+            </td>
+        </tr>
+        <tr>
             <th>Label</th>
             <td>
-                                                            {{ genre.label }}
-                                  </td>
-          </tr>
-          <tr>
+                {{ genre.label }}
+            </td>
+        </tr>
+        <tr>
             <th>Description</th>
             <td>
-                                                            {{ genre.description|raw }}
-                                  </td>
-          </tr>
-          
-                                                                  <tr>
-                <th>Publication</th>
-                <td>
-                  {% if genre.publications|length > 0 %}
-                  <ul>
-                      {% for publication in genre.publications %} 
-                      <li>
-                          <a href='{{ path("publication_show", {"id":publication.id }) }}'>
-                              {{ publication }}
-                          </a>
-                      </li>
-                      {% endfor %}
-                  </ul>
-                  {% endif %}
-                </td>
-              </tr>
-          <tr>
-        <th>Created</th>
-        <td>{{ genre.created|date }}</td>
-    </tr>
-    <tr>
-        <th>Updated</th>
-        <td>{{ genre.updated|date }}</td>
-    </tr>
+                {{ genre.description|raw }}
+            </td>
+        </tr>
+
+        <tr>
+            <th>Publication</th>
+            <td>
+                {% if genre.publications|length > 0 %}
+                    <ul>
+                        {% for publication in genre.publications %}
+                            <li>
+                                <a href='{{ path("publication_show", {"id":publication.id }) }}'>
+                                    {{ publication }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>Created</th>
+            <td>{{ genre.created|date }}</td>
+        </tr>
+        <tr>
+            <th>Updated</th>
+            <td>{{ genre.updated|date }}</td>
+        </tr>
     </tbody>
 </table>
 

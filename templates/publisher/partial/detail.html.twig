@@ -1,59 +1,58 @@
-
 <table class='table table-bordered table-condensed table-hover table-striped'>
     <tbody>
         <tr>
             <th>Name</th>
             <td>
-                                                            {{ publisher.name }}
-                                  </td>
-          </tr>
-          <tr>
+                {{ publisher.name }}
+            </td>
+        </tr>
+        <tr>
             <th>Notes</th>
             <td>
-                                                            {{ publisher.notes|raw }}
-                                  </td>
-          </tr>
-          
-                                                                  <tr>
-                <th>Place</th>
-                <td>
-                  {% if publisher.places|length > 0 %}
-                  <ul>
-                      {% for place in publisher.places %} 
-                      <li>
-                          <a href='{{ path("place_show", {"id":place.id }) }}'>
-                              {{ place }}
-                          </a>
-                      </li>
-                      {% endfor %}
-                  </ul>
-                  {% endif %}
-                </td>
-              </tr>
-                                                                  <tr>
-                <th>Publication</th>
-                <td>
-                  {% if publisher.publications|length > 0 %}
-                  <ul>
-                      {% for publication in publisher.publications %} 
-                      <li>
-                          <a href='{{ path("publication_show", {"id":publication.id }) }}'>
-                              {{ publication }}
-                          </a>
-                      </li>
-                      {% endfor %}
-                  </ul>
-                  {% endif %}
-                </td>
-              </tr>
-          <tr>
-        <th>Created</th>
-        <td>{{ publisher.created|date }}</td>
-    </tr>
-    <tr>
-        <th>Updated</th>
-        <td>{{ publisher.updated|date }}</td>
-    </tr>
+                {{ publisher.notes|raw }}
+            </td>
+        </tr>
+
+        <tr>
+            <th>Place</th>
+            <td>
+                {% if publisher.places|length > 0 %}
+                    <ul>
+                        {% for place in publisher.places %}
+                            <li>
+                                <a href='{{ path("place_show", {"id":place.id }) }}'>
+                                    {{ place }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>Publication</th>
+            <td>
+                {% if publisher.publications|length > 0 %}
+                    <ul>
+                        {% for publication in publisher.publications %}
+                            <li>
+                                <a href='{{ path("publication_show", {"id":publication.id }) }}'>
+                                    {{ publication }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>Created</th>
+            <td>{{ publisher.created|date }}</td>
+        </tr>
+        <tr>
+            <th>Updated</th>
+            <td>{{ publisher.updated|date }}</td>
+        </tr>
     </tbody>
 </table>
 
