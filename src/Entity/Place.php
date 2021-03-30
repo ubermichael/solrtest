@@ -26,7 +26,7 @@ use Nines\UtilBundle\Entity\AbstractEntity;
  * @ORM\Entity(repositoryClass="App\Repository\PlaceRepository")
  * @Solr\Document(
  *     copyField=@Solr\CopyField(from={"name", "regionName", "description", "countryName"}, to="content", type="texts"),
- *     computedFields=@Solr\ComputedField(name="location_p", type="location", getter="getCoordinates")
+ *     computedFields=@Solr\ComputedField(name="coordinates", type="location", getter="getCoordinates")
  * )
  */
 class Place extends AbstractEntity

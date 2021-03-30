@@ -16,13 +16,14 @@ class DefaultIndex extends AbstractIndex
 {
     public function search($q, $filters) {
         $qb = $this->createQueryBuilder();
+        dump($qb);
         $qb->setQueryString($q);
-        $qb->setDefaultField('content_txt');
+        $qb->setDefaultField('content');
 
         foreach ($filters as $key => $values) {
             $qb->addFilter($key, $values);
         }
-        $qb->setHighlightFields('content_txt');
+        $qb->setHighlightFields('content');
         $qb->addFacetField('type');
         $qb->addFacetField('genres');
 
