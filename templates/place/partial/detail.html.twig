@@ -135,13 +135,19 @@
         </tr>
         <tr>
             <th>Nearby Places</th>
-            {{ dump(nearby.getDocument(2)) }}
             <td>
-                {% for i in 0..(nearby.count-1) %}
-                {% set document = nearby.getDocument(i) %}
-                {% set entity = nearby.entity(i) %}
-                {{ entity }} {{ document.distance|number_format(1) }} km<br/>
-                {% endfor %}
+                {% if nearby.count > 0 %}
+                    <ul>
+                    {% for i in 0..(nearby.count-1) %}
+                        {% set document = nearby.getDocument(i) %}
+                        {% set entity = nearby.entity(i) %}
+                        <li>
+                            <a href='{{ path('place_show', {'id': entity.id}) }}'>
+                                {{ entity }}
+                            </a> {{ document.distance|number_format(1) }} km<br/>
+                    {% endfor %}
+                    </ul>
+                {% endif %}
             </td>
         </tr>
         <tr>
