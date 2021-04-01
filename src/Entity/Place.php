@@ -57,13 +57,13 @@ class Place extends AbstractEntity
      * A province, state, territory or other sub-national entity.
      *
      * @ORM\Column(type="string", length=250, nullable=true)
-     * @Solr\Field(type="text")
+     * @Solr\Field(type="string", boost=0.5)
      */
     private $regionName;
 
     /**
      * @ORM\Column(type="string", length=250, nullable=true)
-     * @Solr\Field(type="text", boost=0.6)
+     * @Solr\Field(type="string", boost=0.3)
      */
     private $countryName;
 

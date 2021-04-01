@@ -21,7 +21,7 @@ class DefaultIndex extends AbstractIndex
      *
      * @return Query
      */
-    public function search($q, $filters) {
+    public function searchQuery($q, $filters) {
         $qb = $this->createQueryBuilder();
         $qb->setQueryString($q);
         $qb->setDefaultField('content');

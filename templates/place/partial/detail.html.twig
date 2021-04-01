@@ -136,7 +136,7 @@
         <tr>
             <th>Nearby Places</th>
             <td>
-                {% if nearby.count > 0 %}
+                {% if nearby and nearby.count > 0 %}
                     <ul>
                     {% for i in 0..(nearby.count-1) %}
                         {% set document = nearby.getDocument(i) %}

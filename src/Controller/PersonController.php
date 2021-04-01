@@ -87,7 +87,7 @@ class PersonController extends AbstractController implements PaginatorAwareInter
 
         $result = null;
         if($q) {
-            $query = $repo->search($q, $filters, $rangeFilters);
+            $query = $repo->searchQuery($q, $filters, $rangeFilters);
             $result = $solr->execute($query, $this->paginator, [
                 'page' => (int) $request->query->get('page', 1),
                 'pageSize' => (int) $this->getParameter('page_size'),

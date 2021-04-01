@@ -49,7 +49,7 @@ class DefaultController extends AbstractController implements PaginatorAwareInte
         $filters = $request->query->get('filter', []);
         $result = null;
         if ($q) {
-            $query = $repo->search($q, $filters);
+            $query = $repo->searchQuery($q, $filters);
             $result = $solr->execute($query, $this->paginator, [
                 'page' => (int) $request->query->get('page', 1),
                 'pageSize' => (int) $this->getParameter('page_size'),

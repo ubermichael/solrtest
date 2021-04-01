@@ -12,6 +12,7 @@ namespace App\Controller;
 
 use App\Entity\Place;
 use App\Form\PlaceType;
+use App\Index\PersonIndex;
 use App\Index\PlaceIndex;
 use App\Repository\PlaceRepository;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
@@ -66,6 +67,35 @@ class PlaceController extends AbstractController implements PaginatorAwareInterf
         return [
             'places' => $places,
             'q' => $q,
+        ];
+    }
+
+    /**
+     * @Template
+     * @Route("/solr", name="place_solr", methods={"GET"})
+     *
+     * @param Request $request
+     * @param PlaceIndex $repo
+     * @param SolrManager $solr
+     *
+     * @return array
+     */
+    public function solr(Request $request, PlaceIndex $repo, SolrManager $solr) {
+        $q = $request->query->get('q', '');
+        $filters = $request->query->get('filter', []);
+        $rangeFilters = $request->query->get('filter_range', []);
+
+        $result = null;
+        if($q) {
+            $query = $repo->searchQuery($q, $filters, $rangeFilters);
+            $result = $solr->execute($query, $this->paginator, [
+                'page' => (int) $request->query->get('page', 1),
+                'pageSize' => (int) $this->getParameter('page_size'),
+            ]);
+        }
+        return [
+            'q' => $q,
+            'result' => $result,
         ];
     }
 
@@ -136,8 +166,11 @@ class PlaceController extends AbstractController implements PaginatorAwareInterf
      * @return array
      */
     public function show(Place $place, PlaceIndex $index, SolrManager $manager) {
-        $query = $index->nearBy($place, 50);
-        $nearby = $manager->execute($query);
+        $query = $index->nearByQuery($place, 50);
+        $nearby = null;
+        if($query) {
+            $nearby = $manager->execute($query);
+        }
 
         return [
             'place' => $place,

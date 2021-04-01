@@ -22,7 +22,7 @@ class PersonIndex extends AbstractIndex
      *
      * @return Query
      */
-    public function search($q, $filters = [], $rangeFilters = []) {
+    public function searchQuery($q, $filters = [], $rangeFilters = []) {
         $year = date('Y');
         $qb = $this->createQueryBuilder();
         $qb->setQueryString($q);
@@ -43,6 +43,8 @@ class PersonIndex extends AbstractIndex
         $qb->setHighlightFields('content');
         $qb->addFacetRange('birthDate', 1750, $year, 50);
         $qb->addFacetRange('deathDate', 1750, $year, 50);
+        $qb->addFacetField('birthPlace');
+        $qb->addFacetField('deathPlace');
         $qb->addSorting('score', 'desc');
         $qb->addSorting('sortableName', 'asc');
 

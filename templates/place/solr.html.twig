@@ -1,14 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Person Search{% endblock %}
+{% block title %}Place Search{% endblock %}
 
  {% block pageheader %}
-     <h1>Person Search</h1>
+     <h1>Place Search</h1>
  {% endblock %}
 
 {% block body %}
 
-    <form method="get" action="{{ path('person_solr') }}" class="form-horizontal">
+    <form method="get" action="{{ path('place_solr') }}" class="form-horizontal">
         <div class='row'>
             <div class='col-sm-12'>
                 <fieldset>
@@ -23,7 +23,7 @@
                                         Search
                                     </button>
                                     {% if q %}
-                                        <a class="btn btn-warning" href='{{ path('person_solr') }}'>
+                                        <a class="btn btn-warning" href='{{ path('place_solr') }}'>
                                             <span class='glyphicon glyphicon-refresh'></span>
                                                 Reset
                                         </a>
@@ -38,21 +38,16 @@
         <div class='row'>
             <div class='col-sm-3'>
                 {% if result %}
-                    {% include 'solr/partial/facet_range.html.twig' with {
-                        'facet': result.getFacet('birthDate'),
-                        'filter': 'birthDate',
-                        'header': 'Birth Date'
-                    } %}
-
-                    {% include 'solr/partial/facet_range.html.twig' with {
-                        'facet': result.getFacet('deathDate'),
-                        'filter': 'deathDate',
-                        'header': 'Death Date'
+                    {% include 'solr/partial/facet.html.twig' with {
+                        'facet': result.getFacet('regionName'),
+                        'filter': 'regionName',
+                        'header': 'Region',
+                        'limit': 10
                     } %}
                     {% include 'solr/partial/facet.html.twig' with {
-                        'facet': result.getFacet('birthPlace'),
-                        'filter': 'birthPlace',
-                        'header': 'Birth Place',
+                        'facet': result.getFacet('countryName'),
+                        'filter': 'countryName',
+                        'header': 'Country',
                         'limit': 10
                     } %}
                 {% endif %}

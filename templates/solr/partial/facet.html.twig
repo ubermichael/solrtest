@@ -1,10 +1,20 @@
 {# @var facet array #}
 {# @var string header #}
 {# @var string filter #}
+{# @var int limit #}
 {% if facet|length > 0 %}
+
+    {% if limit is defined %}
+        {% set facets = facet|slice(0,limit, true) %}
+        {% set remaining = facet|length - facets|length %}
+    {% else %}
+        {% set facets = facet %}
+        {% set remaining = 0 %}
+    {% endif %}
+
     {% set queryParams = app.request.query.all %}
     <h3>{{ header }}</h3>
-    {% for k,v in facet %}
+    {% for k,v in facets %}
         {% set checked %}
             {% apply spaceless %}
                 {% if ('filter' in queryParams|keys) and (filter in queryParams['filter']|keys) and (k in queryParams['filter'][filter]) %}
@@ -18,4 +28,5 @@
             </label>
         </div>
     {% endfor %}
+    {% if remaining %}<p class='pull-right'>And {{ remaining }} more.</p>{% endif %}
 {% endif %}
