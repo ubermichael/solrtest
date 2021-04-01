@@ -81,7 +81,7 @@ class PersonController extends AbstractController implements PaginatorAwareInter
      * @return array
      */
     public function solr(Request $request, PersonIndex $repo, SolrManager $solr) {
-        $q = $request->query->get('q', '');
+        $q = $request->query->get('q', '*:*');
         $filters = $request->query->get('filter', []);
         $rangeFilters = $request->query->get('filter_range', []);
 

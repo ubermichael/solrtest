@@ -81,7 +81,7 @@ class PlaceController extends AbstractController implements PaginatorAwareInterf
      * @return array
      */
     public function solr(Request $request, PlaceIndex $repo, SolrManager $solr) {
-        $q = $request->query->get('q', '');
+        $q = $request->query->get('q', '*:*');
         $filters = $request->query->get('filter', []);
         $rangeFilters = $request->query->get('filter_range', []);
 
