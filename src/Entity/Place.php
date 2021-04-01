@@ -37,13 +37,13 @@ class Place extends AbstractEntity
 
     /**
      * @ORM\Column(type="string", length=250, nullable=false)
-     * @Solr\Field(type="text")
+     * @Solr\Field(type="text", boost=1.5)
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=250, nullable=false)
-     * @Solr\Field(type="text")
+     * @Solr\Field(name="sortable", type="string")
      */
     private $sortableName;
 
@@ -63,7 +63,7 @@ class Place extends AbstractEntity
 
     /**
      * @ORM\Column(type="string", length=250, nullable=true)
-     * @Solr\Field(type="text")
+     * @Solr\Field(type="text", boost=0.6)
      */
     private $countryName;
 
@@ -82,7 +82,7 @@ class Place extends AbstractEntity
      *
      * @var string
      * @ORM\Column(type="text", nullable=true)
-     * @Solr\Field(type="text")
+     * @Solr\Field(type="text", boost=0.5)
      */
     private $description;
 

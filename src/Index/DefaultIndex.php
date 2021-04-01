@@ -11,12 +11,18 @@ declare(strict_types=1);
 namespace App\Index;
 
 use Nines\SolrBundle\Index\AbstractIndex;
+use Solarium\QueryType\Select\Query\Query;
 
 class DefaultIndex extends AbstractIndex
 {
+    /**
+     * @param $q
+     * @param $filters
+     *
+     * @return Query
+     */
     public function search($q, $filters) {
         $qb = $this->createQueryBuilder();
-        dump($qb);
         $qb->setQueryString($q);
         $qb->setDefaultField('content');
 

@@ -55,13 +55,14 @@ abstract class Publication extends AbstractEntity implements LinkableInterface
      * @var string
      * @ORM\Column(type="text", nullable=false)
      *
-     * @Solr\Field(type="text")
+     * @Solr\Field(type="text", boost=2.0)
      */
     private $title;
 
     /**
      * @var string
      * @ORM\Column(type="text", nullable=false)
+     * @Solr\Field(name="sortable", type="string")
      */
     private $sortableTitle;
 
@@ -77,7 +78,7 @@ abstract class Publication extends AbstractEntity implements LinkableInterface
      * @var string
      * @ORM\Column(type="text", nullable=true)
      *
-     * @Solr\Field(type="text")
+     * @Solr\Field(type="text", boost=0.5)
      */
     private $description;
 
@@ -93,7 +94,7 @@ abstract class Publication extends AbstractEntity implements LinkableInterface
      * @var DateYear
      * @ORM\OneToOne(targetEntity="DateYear", cascade={"persist", "remove"}, orphanRemoval=true)
      *
-     * @Solr\Field(type="text", mutator="__toString")
+     * @Solr\Field(type="string", mutator="getYear")
      */
     private $dateYear;
 
@@ -101,7 +102,7 @@ abstract class Publication extends AbstractEntity implements LinkableInterface
      * @var Place
      * @ORM\ManyToOne(targetEntity="Place", inversedBy="publications")
      *
-     * @Solr\Field(type="text", mutator="getName")
+     * @Solr\Field(type="text", boost=0.5, mutator="getName")
      */
     private $location;
 
@@ -111,7 +112,7 @@ abstract class Publication extends AbstractEntity implements LinkableInterface
      * @ORM\JoinTable(name="publications_genres")
      * @ORM\OrderBy({"label": "ASC"})
      *
-     * @Solr\Field(type="strings", getter="getGenres(true)")
+     * @Solr\Field(type="strings", boost=0.5, getter="getGenres(true)")
      */
     private $genres;
 

@@ -35,7 +35,7 @@ class Periodical extends Publication
      * @var string
      * @ORM\Column(type="text", nullable=true)
      *
-     * @Solr\Field(type="text")
+     * @Solr\Field(type="text", boost=0.6)
      */
     private $continuedFrom;
 
@@ -43,7 +43,7 @@ class Periodical extends Publication
      * @var string
      * @ORM\Column(type="text", nullable=true)
      *
-     * @Solr\Field(type="text")
+     * @Solr\Field(type="text", boost=0.6)
      */
     private $continuedBy;
 

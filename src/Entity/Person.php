@@ -50,7 +50,7 @@ class Person extends AbstractEntity implements LinkableInterface
      * @var string
      * @ORM\Column(type="string", length=200, nullable=false)
      *
-     * @Solr\Field(type="text")
+     * @Solr\Field(type="text", boost=2.0)
      */
     private $fullName;
 
@@ -58,7 +58,7 @@ class Person extends AbstractEntity implements LinkableInterface
      * @var string
      * @ORM\Column(type="string", length=200, nullable=false)
      *
-     * @Solr\Field(type="text")
+     * @Solr\Field(name="sortable", type="string")
      */
     private $sortableName;
 
@@ -85,7 +85,7 @@ class Person extends AbstractEntity implements LinkableInterface
      * @ORM\Column(type="text", nullable=true)
      *
      * ENT_QUOTES | ENT_HTML5 === 51
-     * @Solr\Field(type="text", filters={"strip_tags", "html_entity_decode(51, 'UTF-8')"})
+     * @Solr\Field(type="text", boost=0.5, filters={"strip_tags", "html_entity_decode(51, 'UTF-8')"})
      */
     private $description;
 
@@ -115,7 +115,7 @@ class Person extends AbstractEntity implements LinkableInterface
      * @var Place
      * @ORM\ManyToOne(targetEntity="Place", inversedBy="peopleBorn")
      *
-     * @Solr\Field(type="string", mutator="getName")
+     * @Solr\Field(type="string", boost=0.6, mutator="getName")
      */
     private $birthPlace;
 
@@ -131,7 +131,7 @@ class Person extends AbstractEntity implements LinkableInterface
      * @var Place;
      * @ORM\ManyToOne(targetEntity="Place", inversedBy="peopleDied")
      *
-     * @Solr\Field(type="string", mutator="getName")
+     * @Solr\Field(type="string", boost=0.6, mutator="getName")
      */
     private $deathPlace;
 
@@ -140,7 +140,7 @@ class Person extends AbstractEntity implements LinkableInterface
      * @ORM\ManyToMany(targetEntity="Place", inversedBy="residents")
      * @ORM\OrderBy({"sortableName": "ASC"})
      *
-     * @Solr\Field(type="texts", getter="getResidences(true)")
+     * @Solr\Field(type="texts", boost=0.3, getter="getResidences(true)")
      */
     private $residences;
 
@@ -149,7 +149,7 @@ class Person extends AbstractEntity implements LinkableInterface
      * @ORM\ManyToMany(targetEntity="Alias", inversedBy="people")
      * @ORM\OrderBy({"sortableName": "ASC"})
      *
-     * @Solr\Field(type="texts", getter="getAliases(true)")
+     * @Solr\Field(type="texts", boost=1.2, getter="getAliases(true)")
      */
     private $aliases;
 

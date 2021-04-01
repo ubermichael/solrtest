@@ -25,7 +25,8 @@ use Nines\UtilBundle\Entity\AbstractEntity;
  * @ORM\Entity(repositoryClass="App\Repository\PublisherRepository")
  *
  * @Solr\Document(
- *     @Solr\CopyField(from={"name", "notes", "places"}, to="content", type="texts")
+ *     @Solr\CopyField(from={"name", "notes", "places"}, to="content", type="texts"),
+ *     @Solr\CopyField(from={"name"}, to="sortable", type="string")
  * )
  */
 class Publisher extends AbstractEntity
@@ -39,7 +40,7 @@ class Publisher extends AbstractEntity
      * @ORM\Column(type="string", length=100, nullable=false)
      * @ORM\OrderBy({"sortableName": "ASC"})
      *
-     * @Solr\Field(type="text")
+     * @Solr\Field(type="text", boost=2.0)
      */
     private $name;
 
@@ -47,7 +48,7 @@ class Publisher extends AbstractEntity
      * @var string
      * @ORM\Column(type="text", nullable=true)
      *
-     * @Solr\Field(type="text", filters={"strip_tags", "html_entity_decode(51, 'UTF-8')"})
+     * @Solr\Field(type="text", boost=0.5, filters={"strip_tags", "html_entity_decode(51, 'UTF-8')"})
      */
     private $notes;
 
@@ -56,7 +57,7 @@ class Publisher extends AbstractEntity
      * @ORM\ManyToMany(targetEntity="Place", inversedBy="publishers")
      * @ORM\OrderBy({"sortableName": "ASC"})
      *
-     * @Solr\Field(type="texts", getter="getPlaces(true)")
+     * @Solr\Field(type="texts", boost=0.6, getter="getPlaces(true)")
      */
     private $places;
 

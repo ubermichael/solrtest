@@ -12,8 +12,11 @@ namespace App\Controller;
 
 use App\Entity\Person;
 use App\Form\PersonType;
+use App\Index\DefaultIndex;
+use App\Index\PersonIndex;
 use App\Repository\PersonRepository;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
+use Nines\SolrBundle\Services\SolrManager;
 use Nines\UtilBundle\Controller\PaginatorTrait;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -64,6 +67,35 @@ class PersonController extends AbstractController implements PaginatorAwareInter
         return [
             'people' => $people,
             'q' => $q,
+        ];
+    }
+
+    /**
+     * @Template
+     * @Route("/solr", name="person_solr", methods={"GET"})
+     *
+     * @param Request $request
+     * @param PersonIndex $repo
+     * @param SolrManager $solr
+     *
+     * @return array
+     */
+    public function solr(Request $request, PersonIndex $repo, SolrManager $solr) {
+        $q = $request->query->get('q', '');
+        $filters = $request->query->get('filter', []);
+        $rangeFilters = $request->query->get('filter_range', []);
+
+        $result = null;
+        if($q) {
+            $query = $repo->search($q, $filters, $rangeFilters);
+            $result = $solr->execute($query, $this->paginator, [
+                'page' => (int) $request->query->get('page', 1),
+                'pageSize' => (int) $this->getParameter('page_size'),
+            ]);
+        }
+        return [
+            'q' => $q,
+            'result' => $result,
         ];
     }
 
