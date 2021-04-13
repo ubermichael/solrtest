@@ -10,46 +10,24 @@
 
     <form method="get" action="{{ path('person_solr') }}" class="form-horizontal">
         <div class='row'>
-            <div class='col-sm-12'>
-                <fieldset>
-                    <div class='form-group'>
-                        <label class='col-sm-2 control-label' for='q'>Search term</label>
-                        <div class='col-sm-10'>
-                            <div class='input-group'>
-                                <input type='text' name='q' id='q' class='form-control' value='{{ q }}'>
-                                <span class="input-group-btn">
-                                    <button class="btn btn-primary" id='btn-search' type="submit">
-                                        <span class='glyphicon glyphicon-search'></span>
-                                        Search
-                                    </button>
-                                    {% if q %}
-                                        <a class="btn btn-warning" href='{{ path('person_solr') }}'>
-                                            <span class='glyphicon glyphicon-refresh'></span>
-                                                Reset
-                                        </a>
-                                    {% endif %}
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </fieldset>
-            </div>
+            {% embed '@NinesSolr/search/partial/search_field.html.twig' with {'path': 'person_solr'} %}
+            {% endembed %}
         </div>
         <div class='row'>
             <div class='col-sm-3'>
                 {% if result %}
-                    {% include 'solr/partial/facet_range.html.twig' with {
+                    {% include '@NinesSolr/search/partial/facet_range.html.twig' with {
                         'facet': result.getFacet('birthDate'),
                         'filter': 'birthDate',
                         'header': 'Birth Date'
                     } %}
 
-                    {% include 'solr/partial/facet_range.html.twig' with {
+                    {% include '@NinesSolr/search/partial/facet_range.html.twig' with {
                         'facet': result.getFacet('deathDate'),
                         'filter': 'deathDate',
                         'header': 'Death Date'
                     } %}
-                    {% include 'solr/partial/facet.html.twig' with {
+                    {% include '@NinesSolr/search/partial/facet.html.twig' with {
                         'facet': result.getFacet('birthPlace'),
                         'filter': 'birthPlace',
                         'header': 'Birth Place',
@@ -60,32 +38,12 @@
             <div class='col-sm-9'>
                 {% if result and result.count > 0 %}
                     {% set pagination = result.paginator %}
-                    {% if pagination %}
-                        {% set pageData = pagination.getPaginationData %}
-                        <h3>Results</h3>
-                        <p class="count">
-                            Found {{ pagination.getTotalItemCount }} results. Showing
-                            page {{ pagination.getCurrentPageNumber }}
-                            of {{ pagination.getPageCount }}
-                            with results from {{ pageData.firstItemNumber }} to {{ pageData.lastItemNumber }}.
-                        </p>
-                    {% endif %}
 
-                    <div class='list-group'>
-                        {% for i in 0..(result.count-1) %}
-                            {% set document = result.getDocument(i) %}
-                            {% set entity = result.entity(i) %}
-                            <a href='{{ entity_linker.link(entity) }}' class='list-group-item'> <b>{{ document.type_s }}
-                                    : {{ entity }}</b><br />
-                                {% for h in result.getHighlighting(i) %}
-                                    {{ h|join("...")|raw }}
-                                {% endfor %}
-                                {% if is_granted('ROLE_USER') %}
-                                    <span class='pull-right text-muted'>{{ document.score }}</span><br/>
-                                {% endif %}
-                            </a>
-                        {% endfor %}
-                    </div>
+                    {% embed '@NinesSolr/search/partial/header.html.twig' with {'pagination': pagination} %}
+                    {% endembed %}
+
+                    {% embed '@NinesSolr/search/partial/result.html.twig' with {'result': result} %}
+                    {% endembed %}
 
                     {% if pagination %}
                         <div class="navigation">
