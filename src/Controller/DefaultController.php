@@ -45,7 +45,10 @@ class DefaultController extends AbstractController implements PaginatorAwareInte
      * @Template
      */
     public function solrAction(Request $request, DefaultIndex $repo, SolrManager $solr) {
-        $q = $request->query->get('q', '*:*');
+        $q = $request->query->get('q');
+        if( ! $q) {
+            $q = '*:*';
+        }
         $filters = $request->query->get('filter', []);
         $result = null;
         if ($q) {
