@@ -45,16 +45,3 @@ services:
         tags:
             - { name: knp_menu.menu_builder, method: mainMenu, alias: main}
             - { name: knp_menu.menu_builder, method: footerMenu, alias: footer}
-
-    Nines\MediaBundle\Service\LinkManager:
-        arguments:
-            $routing: '%nines_util.routing%'
-
-    Nines\MediaBundle\Service\CitationManager:
-        arguments:
-            $routing: '%nines_util.routing%'
-
-    Nines\MediaBundle\Service\ImageManager:
-        arguments:
-            $root: '%kernel.project_dir%'
-            $routing: '%nines_util.routing%'
